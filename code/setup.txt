@@ -1,0 +1,14 @@
+#tested under debian system
+
+
+pip installs:
+
+
+
+
+
+linking for IDT2:
+
+cd /usr/lib/x86_64-linux-gnu/
+
+ln -s -f libc.a liblibc.a
