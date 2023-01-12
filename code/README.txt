@@ -16,10 +16,6 @@ workflow
     python3 Data/Label_Generator/ONE_TARGET_LABEL.py 192.168.0.5 unlabeled_trace.csv aggregation_ready_trace.csv
 
 
-#this includes the process of aggregation, 
-#in succsession a folder structure is created, 
-#this includes human readable log files for aggregation and detection 
-# an example plot is created!
 
 4. run Detection on maps Folder
 
