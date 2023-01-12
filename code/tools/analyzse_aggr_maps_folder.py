@@ -16,32 +16,11 @@ class Analyse:
         
 
 
-
-
-
-
-
     if(str(sys.argv[1]) == "--help"):
         print("argv1 == PATH_AGGREGATION_MAPS")
 
 
     path = str(sys.argv[1])
-
-
-
-    #print all
-
-
-    # for root, directories, file in os.walk(path):
-    #     for file in file:
-    #         if(file.endswith(".csv")):
-    #             # print(os.path.join(root,file))
-    #             path = os.path.join(root,file)
-    #             print(path)
-
-    #             command_string = 'python3 check_aggr_map.py ' +  str(path)
-    #             print(command_string)
-    #             os.system(command_string)
 
     count = 0
     total_labels = 0
@@ -49,8 +28,6 @@ class Analyse:
     #needed to not flood the stdout with warning messages
     warn_message_threshold = 3
     warnings = 0
-
-
 
     for root, directories, file in os.walk(path):
         for file in file:

@@ -1,6 +1,7 @@
-
 import pandas as pd
 import sys
+
+#debug tool, to command line allow for readin a pickle file, and print to console
 
 def load_columns(target_path):
 

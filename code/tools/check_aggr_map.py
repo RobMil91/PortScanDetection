@@ -1,4 +1,3 @@
-import ipaddress
 from Aggregation_Map import *
 import matplotlib.pyplot as plt
 
@@ -10,9 +9,7 @@ import scipy.stats as stats
 import sys
 
 
-
-
-
+#debuggin tool, to check a single aggregation map for its properties
 if(str(sys.argv[1]) == "--help"):
     print("argv1 == PATH_LABELD_TRACE, needs to be csv")
 
@@ -28,8 +25,6 @@ map = np.array(map)
 label = map[-1]
 
 map = map[:len(map)-1]
-
-# x2 = x2.reshape(32,32,1)
 
 print(map)
 print(map.shape)
@@ -69,7 +64,7 @@ list = []
 
 list.append(orig_map)
 
-
+#debug print function 
 def print_save_aggregation_map_list(aggregation_map_list, path=None, bool_show=False, grid_rows=5, grid_colums=5, MAP_DIMENSION_X=32, MAP_DIMENSION_Y=32):
 
     if ((grid_rows * grid_colums) <= (len(aggregation_map_list)-1)): 
@@ -80,17 +75,13 @@ def print_save_aggregation_map_list(aggregation_map_list, path=None, bool_show=F
     
     for index in range(len(aggregation_map_list)):
 
-        # iteration_df = unlabeled_trace_dataframe.loc[(unlabeled_trace_dataframe['frame.time_epoch'] >= current_timestamp)  &  (unlabeled_trace_dataframe['frame.time_epoch'] < current_timestamp + time_window)]
         aggr_map = aggregation_map_list[index]
-
         img_array = aggr_map
         plt.subplot(int(grid_rows), int(grid_colums), index + 1)
         plt.xlabel("Source IP Address Buckets", fontsize=30)
         plt.ylabel("Destination Port Buckets", fontsize=30)
         plt.xticks(range(0,33), fontsize=15)
         plt.yticks(range(0,33), fontsize=15)
-        # plt.xticks([0,4,8,12,16,20,24,28,32], fontsize=20)
-        # plt.yticks(fontsize=20)
         plt.imshow(img_array, cmap='gray', vmin=0, vmax=255,  extent=[0,MAP_DIMENSION_X - 1 ,0,MAP_DIMENSION_Y - 1])
 
     figure = plt.gcf()

@@ -1,22 +1,13 @@
 
 import pandas as pandas
 
+#debug tool to identify an attack within a csv packet trace, it also highlights properties of the attack (or given ip)
+
 
 import sys
 
-
-
-if(str(sys.argv[1]) == "--help"):
-    print("argv1 == attacker ip e.g. 192.168.111.112")
-    print("argv2 == victim ip e.g. 192.168.111.115")
-    print("argv3 == UNLABELED TRACE DATA PATH")
-    print("argv4 == OUTPUT PATH FOR GENERATED TRACE")
-    print("remember to do this first: "  )
-    print("tshark -r chunk_00076_20170707201608.pcap -t ud -T fields -e ip.src -e ip.dst -e tcp.srcport  -e tcp.dstport  -e udp.srcport  -e udp.dstport -e ip.proto -e frame.time -e _ws.col.Time -e frame.time_epoch -e frame.protocols -E separator=, -E quote=d, -E header=y > portscan_from_20-15_CET.csv")
-
-
-
 # input -> normal_pcap
+#example command:
 # tshark -r chunk_00076_20170707201608.pcap -t ud -T fields -e ip.src -e ip.dst -e tcp.srcport  -e tcp.dstport  -e udp.srcport  -e udp.dstport -e ip.proto -e frame.time -e _ws.col.Time -e frame.time_epoch -e frame.protocols -E separator=, -E quote=d, -E header=y > portscan_from_20-15_CET.csv
 
 
@@ -26,8 +17,6 @@ victim = str(sys.argv[2])
 STEPS = int(str(sys.argv[3]))
 
 STEP_SIZE = int(str(sys.argv[4]))
-
-
 
 unlabeled_trace_dataframe = pandas.read_csv(str(sys.argv[5]))
 
@@ -60,8 +49,6 @@ print("start :")
 print(attack_traffic_df.iloc[0])
 
 print("------------------------------------------------------------------------------------------------------------")
-
-# print(rows)
 
 for i in range(STEPS):
 

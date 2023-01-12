@@ -21,14 +21,6 @@ class Aggregation_Map():
         return str(self.id) + " , " + str(self.label)
 
 
-    def print_map():
-        raise("TODo")
-
-
-    def save_map():
-        raise("TODO")
-
-
     def set_normalizsed_map(self, normalizsed_map):
         self.normalizsed_map = normalizsed_map
 

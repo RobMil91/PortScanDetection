@@ -12,23 +12,15 @@ import scipy.stats as stats
 #function is needed to delte csv files that hinder 50/50 balanced dataset
 def remove_benign(folder_path, count):
     counter = count
-
-    # print("reached")
-    # print(folder_path)
     for root, directories, file in os.walk(folder_path):
         for file in file:
             #needed to ignore possible meta data
             if(file.endswith(".csv")):
                 folder_path = os.path.join(root,file)
                 PATH_TO_MAP = folder_path
-                # print(PATH_TO_MAP)
                 map = pd.read_csv(PATH_TO_MAP, index_col=[0])
-
-                # print(map)
-                #need to make numpy array
                 map = np.array(map)
                 label = map[-1]
-                # print("reached")
 
                 if(label == 0):
 
@@ -47,14 +39,12 @@ def remove_portscan(folder_path, count):
             if(file.endswith(".csv")):
                 folder_path = os.path.join(root,file)
                 PATH_TO_MAP = folder_path
-                # print(PATH_TO_MAP)
                 map = pd.read_csv(PATH_TO_MAP, index_col=[0])
 
                 # print(map)
                 #need to make numpy array
                 map = np.array(map)
                 label = map[-1]
-                # print("reached")
 
                 if(label == 1):
 
@@ -75,12 +65,10 @@ path = str(sys.argv[1])
 
 dir_path = path
 
-
-
 count = 0
 total_labels = 0
 
-    #needed to not flood the stdout with warning messages
+#needed to not flood the stdout with warning messages
 warn_message_threshold = 3
 warnings = 0
 
@@ -89,9 +77,7 @@ warnings = 0
 for root, directories, file in os.walk(path):
     for file in file:
         if(file.endswith(".csv")):
-            # print(os.path.join(root,file))
             path = os.path.join(root,file)
-            # print(path)
             PATH_TO_MAP = path
 
             map = pd.read_csv(PATH_TO_MAP, index_col=[0])
@@ -126,13 +112,8 @@ print(total_labels)
 
 benigin = count - total_labels
 
-# if(total_labels > 0):
-#     print("More than one label found!")
-
-
 if( not (total_labels == benigin)):
 
-# if ((count / total_labels) != 2):
     print("Need to reduce benign or label")
 
 
@@ -143,7 +124,6 @@ if( not (total_labels == benigin)):
         #this is needed to reduce the amount of benigin maps
         amount_to_reduce = benigin - total_labels
 
-        # print(dir_path)
         remove_benign(dir_path, amount_to_reduce)
 
     if(benigin < total_labels):

@@ -1,10 +1,8 @@
-
-
-
-
 import sys
 import pandas as pd
 
+#debug tool, to identify start and end time of a given pcap file (packet trace file)
+#caution this might be time and ram consuming depending on the pcap file size
 
 CSV_PATH =  str(sys.argv[1])
 
