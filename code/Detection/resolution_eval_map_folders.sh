@@ -91,13 +91,6 @@ do
     python3 ../Plotting/plot_from_histories.py "$OUT_PATH${MAP_FOLDERS[$i]}/" $EPOCHS "$OUT_PATH${MAP_FOLDERS[$i]}/metrics_ROUND_$NAME/" 'recall'
     python3 ../Plotting/plot_from_histories.py "$OUT_PATH${MAP_FOLDERS[$i]}/" $EPOCHS "$OUT_PATH${MAP_FOLDERS[$i]}/metrics_ROUND_$NAME/" 'FP'
 
-
-
-
-
-
-
-
 done
 
 #needed to save the configuration

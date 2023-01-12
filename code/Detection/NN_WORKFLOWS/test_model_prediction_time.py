@@ -6,6 +6,8 @@ from NN_UTILS import *
 
 import timeit
 
+#needs to be configured from comments below!
+
 #this modul is given to accept a given model -> need absolut folder path!
 #it tests with the model on given test data
 #the result history and the new model are placed in the test data folder (since the data there was tested)

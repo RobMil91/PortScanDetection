@@ -50,25 +50,11 @@ print("CSV_PATH: " + str(PATH_TO_MAPS))
 
 tupel_list = get_vector_maps_labels(PATH_TO_MAPS)
 
-# print(tupel_list)
-
-
-# map_vector1 = tupel_list[0][0]
-# print(map_vector1.shape)
-
-
-# map_represenation = map_vector1.reshape(32,32,1)
-
-# print(map_represenation.shape)
 print("Get model: --------------------------------------------------------------------------------")
 
 model = getModel(RESOLUTION_X)
 
 # outpath = OUTPUT_PATH + '/model.jpg'
-
-
-
-
 
 # plot_model(model, to_file=outpath, rankdir="TB", show_dtype=False, show_layer_names=False, show_layer_activations=False,dpi=400)
 
@@ -81,10 +67,8 @@ print("Get info on input data: -------------------------------------------------
 
 print(x_train.shape)
 
-# print(x_train[0].shape)
-
 print(y_train.shape)
-# print(y_train[0])
+
 
 
 history = model.fit(x=x_train, y=y_train,

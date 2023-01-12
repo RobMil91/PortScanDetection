@@ -30,8 +30,6 @@ epochs = int(str(sys.argv[3]))
 batch_size = int(str(sys.argv[4]))
 
 
-
-
 validation_split = float(str(sys.argv[5]))
 
 OUTPUT_PATH = str(sys.argv[6])
@@ -55,16 +53,6 @@ print("CSV_PATH: " + str(PATH_TO_MAPS))
 
 tupel_list = get_vector_maps_labels(PATH_TO_MAPS)
 
-# print(tupel_list)
-
-
-# map_vector1 = tupel_list[0][0]
-# print(map_vector1.shape)
-
-
-# map_represenation = map_vector1.reshape(32,32,1)
-
-# print(map_represenation.shape)
 print("Get model: --------------------------------------------------------------------------------")
 
 model = getModel(RESOLUTION_X)
@@ -82,10 +70,8 @@ print("Get info on input data: -------------------------------------------------
 
 print(x_train.shape)
 
-# print(x_train[0].shape)
-
 print(y_train.shape)
-# print(y_train[0])
+
 
 
 X,Y = shuffle(x_train, y_train)

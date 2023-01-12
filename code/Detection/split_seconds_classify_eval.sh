@@ -52,24 +52,6 @@ do
 
     echo "$OUT_PATH${MAP_FOLDERS[$i]}/$NAME${MAP_FOLDERS[$i]}.pkl"
 
-    # cp "$OUT_PATH${MAP_FOLDERS[$i]}/$NAME${MAP_FOLDERS[$i]}.pkl" "$HISTORY_PATH$NAME${MAP_FOLDERS[$i]}.pkl"
-    # bool=$(echo "$VALIDATION_SPLIT > 0.0" | bc)
-    # if [ $bool = '1' ]; then
-
-    # # python3 ../Plotting/plot_1_history.py "$OUT_PATH${MAP_FOLDERS[$i]}/$NAME.pkl" "$OUT_PATH${MAP_FOLDERS[$i]}/metrics/"
-    # python3 ../Plotting/plot_from_histories.py "$OUT_PATH${MAP_FOLDERS[$i]}/" $EPOCHS "$OUT_PATH${MAP_FOLDERS[$i]}/metrics_ROUND_$NAME/" 'val_accuracy'
-    # python3 ../Plotting/plot_from_histories.py "$OUT_PATH${MAP_FOLDERS[$i]}/" $EPOCHS "$OUT_PATH${MAP_FOLDERS[$i]}/metrics_ROUND_$NAME/" 'val_precision'
-    # python3 ../Plotting/plot_from_histories.py "$OUT_PATH${MAP_FOLDERS[$i]}/" $EPOCHS "$OUT_PATH${MAP_FOLDERS[$i]}/metrics_ROUND_$NAME/" 'val_recall'
-    # python3 ../Plotting/plot_from_histories.py "$OUT_PATH${MAP_FOLDERS[$i]}/" $EPOCHS "$OUT_PATH${MAP_FOLDERS[$i]}/metrics_ROUND_$NAME/" 'val_FP'
-    # python3 ../Plotting/plot_from_histories.py "$OUT_PATH${MAP_FOLDERS[$i]}/" $EPOCHS "$OUT_PATH${MAP_FOLDERS[$i]}/metrics_ROUND_$NAME/" 'val_FN'
-
-    # fi
-    # python3 ../Plotting/plot_from_histories.py "$OUT_PATH${MAP_FOLDERS[$i]}/" $EPOCHS "$OUT_PATH${MAP_FOLDERS[$i]}/metrics_ROUND_$NAME/" 'FN'
-    # python3 ../Plotting/plot_from_histories.py "$OUT_PATH${MAP_FOLDERS[$i]}/" $EPOCHS "$OUT_PATH${MAP_FOLDERS[$i]}/metrics_ROUND_$NAME/" 'accuracy'
-    # python3 ../Plotting/plot_from_histories.py "$OUT_PATH${MAP_FOLDERS[$i]}/" $EPOCHS "$OUT_PATH${MAP_FOLDERS[$i]}/metrics_ROUND_$NAME/" 'precision'
-    # python3 ../Plotting/plot_from_histories.py "$OUT_PATH${MAP_FOLDERS[$i]}/" $EPOCHS "$OUT_PATH${MAP_FOLDERS[$i]}/metrics_ROUND_$NAME/" 'recall'
-    # python3 ../Plotting/plot_from_histories.py "$OUT_PATH${MAP_FOLDERS[$i]}/" $EPOCHS "$OUT_PATH${MAP_FOLDERS[$i]}/metrics_ROUND_$NAME/" 'FP'
-
 
 done
 

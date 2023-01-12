@@ -53,33 +53,11 @@ print("Get info on input data: -------------------------------------------------
 (x_val_test, y_val_test)= get_NN_train_input(tupel_list_validation, RESOLUTION_X, RESOLUTION_X)
 
 
-# print(x_train.shape)
-
-# # print(x_train[0].shape)
-
-# print(y_train.shape)
-# # print(y_train[0])
-
 
 #needed to shuffle learn data and test data
 X,Y = shuffle(x_train, y_train)
 X_val,Y_val = shuffle(x_val_test, y_val_test)
 
-
-
-
-
-
-# y_train = y_train.reshape(len(y_train))
-
-# print(y_train.shape)
-
-# split_test_train((x_train, y_train))
-
-
-
-        #   epochs=20,
-        #   batch_size=128)
 
 history = model.fit(x=X, y=Y,
           batch_size=batch_size, 

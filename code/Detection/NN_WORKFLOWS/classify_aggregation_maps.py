@@ -39,6 +39,7 @@ tupel_list = get_vector_maps_labels(PATH_TO_MAPS)
 #z scoring happens HERE!
 (x_train, y_train) = get_NN_train_input(tupel_list, RESOLUTION_X, RESOLUTION_X)
 
+
 print(x_train.shape)
 print(y_train.shape)
 print(x_train[0].shape)

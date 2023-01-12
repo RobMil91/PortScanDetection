@@ -1,4 +1,4 @@
-
+#gc = global call -> this script is used from top level folder
 
 echo READING CONFIG
 
