@@ -1,6 +1,8 @@
 #this pipeline is used to work on a labeled csv created by the attack injection labeling generator
 echo READING CONFIG
 
+#gc = global call -> this script is used from top level folder
+
 #CONFIGURE:
 #INPUT
 LABELD_CSV=$1
