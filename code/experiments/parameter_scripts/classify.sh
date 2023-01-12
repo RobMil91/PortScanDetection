@@ -4,6 +4,8 @@ echo READING CONFIG
 
 RUNS=22
 
+
+#hardcoded folder structure!
 MAP_FOLDERS=("exposure_time_0.1seconds"  "exposure_time_0.3seconds"  "exposure_time_0.5seconds" 
 "exposure_time_0.7seconds"  "exposure_time_0.9seconds" "exposure_time_0.2seconds" 
 "exposure_time_0.4seconds"  "exposure_time_0.6seconds"  "exposure_time_0.8seconds" 'exposure_time_1seconds' 'exposure_time_5seconds' 'exposure_time_10seconds' 

@@ -1,4 +1,5 @@
 
+#function to create multiple histories from SAME labeled CSV that got classified
 
 echo READING CONFIG
 

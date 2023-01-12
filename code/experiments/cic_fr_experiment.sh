@@ -1,5 +1,4 @@
 
-
 # Configuration:
 PCAP_Location=$1
 IDT_LOC=~/workspace/MA_Thesis/ID2T/id2t

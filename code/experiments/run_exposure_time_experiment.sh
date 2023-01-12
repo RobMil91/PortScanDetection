@@ -3,16 +3,6 @@
 # Configuration:
 PCAP_Location=$1
 IDT_LOC=~/workspace/MA_Thesis/ID2T/id2t
-
-#get no attack pcap (monday CIC)
-
-
-
-#inject attacks from 32 source IP address buckets
-
-
-
-
 PCAP_PATH_ORG=~/workspace/data/control_exp/portscan_2_min.pcap
 
 #------------------------------------------------------------config  attack:
@@ -84,38 +74,3 @@ echo "------------------------------------------------Detection Complete--------
 python3 ../Plotting/subplots_exp_time.py $aggr_maps_path
 
 echo "------------------------------------------------Plotting Complete--------------------------------------"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#aggregation on exposure times from 0.1 to 0.9 seconds
-
-#aggregation on exposure times from 1 second to 60 seconds
-
-
-#balance the experiments folders
-
-
-#classifiy all folders
-
-
-#plot results of classifying 

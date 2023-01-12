@@ -32,8 +32,6 @@ echo "---LOG: Different Exposure times: $diff_exposure_times"
 echo "---LOG: timing_list: $timing_list"
 
 
-
-
 mkdir "$FOLDER_PATH/maps";
 
 
@@ -53,7 +51,7 @@ echo "Current Exposure Time: ${timing_list[$i]}"
 echo "Total Maps Created: "
 echo "$ALL_SECONDS / ${timing_list[$i]}" | bc
 
-# 8h got 28800 seconds 
+# 8h = 28800 seconds 
 # so 1 second means necessary to get 28800 maps
 # 5 seconds means we cut down to 28800 / 5
 # 10 seconds ... 28800 / 10
