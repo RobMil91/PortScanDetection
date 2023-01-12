@@ -26,7 +26,6 @@ def sort(lst):
 
 #function needed to prepare plot from multiple histories:
 #it returns a numpy shape of format:
-#
 def connect_histories(path, metric_name_in_df):
 
     np_current = None
@@ -41,17 +40,12 @@ def connect_histories(path, metric_name_in_df):
 
     sorted_files = sorted(new_list,key=lambda x: float(x.replace("ROUND_1threshold_", "").replace(".pkl", "")))
 
-    # sorted_files = sorted(new_list,key=lambda x: int(os.path.splitext(x)[0]))
-
-    # print(sorted_files)
-
 
     for file in sorted_files:
 
 
 
         compl_path = path + file
-        # print(compl_path)
         counter = counter + 1
         history = load_pkl(compl_path)
         df = history[metric_name_in_df].to_frame() 
@@ -64,7 +58,6 @@ def connect_histories(path, metric_name_in_df):
 
         else:
           np_current = np.concatenate([np_current, numpy_array_itr_val], axis = 1)
-          # print((np_current.shape))
 
 
     return np_current
@@ -72,7 +65,6 @@ def connect_histories(path, metric_name_in_df):
 
 def plot_control_line(range, color):
 
-  # print(np.shape(max1))
   ctrl_line = np.ones((22,))
 
   x_axis = range
@@ -93,7 +85,6 @@ def plot_on_plt(plt, numpy_array, metric_name, range, color):
 
   x_axis = range
 
-  # plt.figure(facecolor='white')
   plt.plot(x_axis, max1, color=color, label=metric_name)
 
 

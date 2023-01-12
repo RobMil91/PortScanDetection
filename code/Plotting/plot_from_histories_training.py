@@ -7,13 +7,14 @@ import os
 
 from matplotlib import pyplot as plt
 
+#needs adjusting in the config commented parts
+
+#plots shaded graph over epochs , each epoch shows the min max and median of for example accuracy
+
 
 def load_pkl(target_path):
   df = pd.read_pickle(target_path)
 
-#needed for debuging
-  # df.plot(figsize=(8,5))
-  # plt.show()
   return df
 
 def connect_histories(path, metric_name_in_df):
@@ -31,15 +32,11 @@ def connect_histories(path, metric_name_in_df):
         for file in file:
 
             if(file.endswith(".pkl")):
-                # print(os.path.join(root,file))
                 path = os.path.join(root,file)
-                #order does not matter.
                 counter = counter + 1
 
-                # print("debug loading pkl")
                 history = load_pkl(path)
 
-                #a column is imported as a series logic below forces dataframes!
                 df = history[metric_name_in_df].to_frame()               
 
                 numpy_array_itr_val = df.to_numpy()
@@ -51,14 +48,6 @@ def connect_histories(path, metric_name_in_df):
                 else:
 
                     np_current = np.concatenate([np_current, numpy_array_itr_val], axis = 1)
-                    # print((np_current.shape))
-
-    # print("finished loop----------------------")
-
-    #     #need epochs,learning_runs
-    # print(np_current.shape)
-
-    # print("Found : " + str(counter) + " histories")
 
 
     return np_current
@@ -125,11 +114,6 @@ max1 = np.array(np_shape_of_histories.max(axis=1))
 
 x_axis = np.arange(0,100)
 
-
-# fig, ax = plt.subplots(1)
-
-# if(not(("FP" in metric_name) or ("FN" in metric_name))):
-#   ax.set_ylim([0, 1])
 
 plt.ylim([0, 1.01])
 plt.xticks(fontsize=xytickFontsize)

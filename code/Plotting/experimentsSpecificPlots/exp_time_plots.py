@@ -7,26 +7,22 @@ import os
 
 from matplotlib import pyplot as plt
 
+#function to plot alongside different exposure times (specific thesis graph)
 
 def load_pkl(target_path):
   df = pd.read_pickle(target_path)
-
-#needed for debuging
-  # df.plot(figsize=(8,5))
-  # plt.show()
   return df
 
 
 
 def sort(lst):
 
-  lst.sort(key = str)
+  lst.sort(key = float)
   return lst
 
 
 #function needed to prepare plot from multiple histories:
 #it returns a numpy shape of format:
-#
 def connect_histories(path, metric_name_in_df):
 
     np_current = None
@@ -39,13 +35,9 @@ def connect_histories(path, metric_name_in_df):
 
     new_list = [item for item in list_of_paths if (".pkl" in item)]
 
-    # list_of_paths.sort()
-
-    print(sort(list_of_paths))
-
     sorted_files = sorted(new_list,key=lambda x: int(os.path.splitext(x)[0]))
 
-    # print(sorted_files)
+    print(sorted_files)
 
 
     for file in sorted_files:
@@ -53,7 +45,7 @@ def connect_histories(path, metric_name_in_df):
 
 
         compl_path = path + file
-        print(compl_path)
+        # print(compl_path)
         counter = counter + 1
         history = load_pkl(compl_path)
         df = history[metric_name_in_df].to_frame() 
@@ -71,10 +63,10 @@ def connect_histories(path, metric_name_in_df):
 
     return np_current
 
+
 def plot_control_line(range, color):
 
-  # print(np.shape(max1))
-  ctrl_line = np.ones((len(range),))
+  ctrl_line = np.ones((22,))
 
   x_axis = range
 
@@ -83,20 +75,12 @@ def plot_control_line(range, color):
   return plt
 
 
-
-
-
-
-
 def plot_on_plt(plt, numpy_array, metric_name, range, color):
 
   max1 = np.array(numpy_array.max(axis=0))
 
   x_axis = range
 
-  print(np.shape(x_axis))
-
-  # plt.figure(facecolor='white')
   plt.plot(x_axis, max1, color=color, label=metric_name)
 
 
@@ -106,21 +90,19 @@ def plot_on_plt(plt, numpy_array, metric_name, range, color):
 
 PATH_TO_HISTORIES = str(sys.argv[1])
 
+
 OUT_PATH = str(sys.argv[2])
 
 
 np_shape_of_histories = connect_histories(PATH_TO_HISTORIES, "val_accuracy")
 
 
-# 16
-range1 = ["1", "5", "10",
- "25", "50", "75", 
- "100", "200"]
+range1 = ['0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9']
 
-# range2 = ['1', '5', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55', '60']
+range2 = ['1', '5', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55', '60']
 
 
-compl_range = range1 
+compl_range = range1 + range2
 
 
 plt.figure(facecolor='white') 
@@ -130,9 +112,8 @@ plt.ylim([0.8, 1.1])
 plt.xticks(size=7)
 
 plt.ylabel("Metric Value")
-#  fontsize=14)
-plt.xlabel("Threshold")
-plt.title("Different Thresholds")
+plt.xlabel("Exposure Times in Seconds")
+plt.title("Different Exposure Times")
 
 
 np_shape_of_histories_acc = connect_histories(PATH_TO_HISTORIES, "val_accuracy")
@@ -140,21 +121,15 @@ np_shape_of_histories_prec = connect_histories(PATH_TO_HISTORIES, "val_precision
 np_shape_of_histories_recall = connect_histories(PATH_TO_HISTORIES, "val_recall")
 
 
-print(np.shape(np_shape_of_histories_acc))
-
-
 plt = plot_on_plt(plt, np_shape_of_histories_recall, "Validation Recall", compl_range, "green")
 plt = plot_on_plt(plt, np_shape_of_histories_prec, "Validation Precision", compl_range, "blue")
 plt = plot_on_plt(plt, np_shape_of_histories_acc, "Validation Accuracy", compl_range, "yellow")
 
 
-# plot control line
-# plt = plot_on_plt(plt, np.ones((22,)), "control line", compl_range, "red")
-
 plot_control_line(compl_range, "red")
 
 plt.legend(loc="lower right")
 
-plt.savefig(str(OUT_PATH) + "validation_compare_on_resolution")
+plt.savefig(str(OUT_PATH) + "validation_compare")
 plt.show()
 

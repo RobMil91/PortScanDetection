@@ -1,10 +1,9 @@
 import pandas as pd
 from matplotlib import pyplot as plt
 import sys
-
+#debug function to identify one history all columns are plotted
 
 def plot_selected(history_column, column_name, out_path):
-
 
   print("plotting " + str(column_name))
   df = history_column
@@ -16,20 +15,12 @@ def plot_selected(history_column, column_name, out_path):
 
   save_path = out_path + column_name + ".jpg"
   plt.savefig(save_path)
-#   plt.show()
-
-
-
-
 
 
 def load_metric_jpg(target_path, out_path):
 
 
   history = pd.read_pickle(target_path)
-
-
-  # print(history.columns)
 
   for column in history.columns:
 

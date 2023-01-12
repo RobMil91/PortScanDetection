@@ -11,9 +11,6 @@ from matplotlib import pyplot as plt
 def load_pkl(target_path):
   df = pd.read_pickle(target_path)
 
-#needed for debuging
-  # df.plot(figsize=(8,5))
-  # plt.show()
   return df
 
 
@@ -26,7 +23,7 @@ def sort(lst):
 
 #function needed to prepare plot from multiple histories:
 #it returns a numpy shape of format:
-#
+
 def connect_histories(path, metric_name_in_df):
 
     np_current = None
@@ -39,14 +36,10 @@ def connect_histories(path, metric_name_in_df):
 
     new_list = [item for item in list_of_paths if (".pkl" in item)]
 
-    # list_of_paths.sort()
-
     print(sort(list_of_paths))
 
-    # sorted_files = sorted(new_list,key=lambda x: int(os.path.splitext(x)[0]))
-    sorted_files = sorted(new_list,key=lambda x: int(x.replace("ROUND_1", "").replace(".pkl",)))
+    sorted_files = sorted(new_list,key=lambda x: int(os.path.splitext(x)[0]))
 
-    # print(sorted_files)
 
 
     for file in sorted_files:
@@ -67,14 +60,12 @@ def connect_histories(path, metric_name_in_df):
 
         else:
           np_current = np.concatenate([np_current, numpy_array_itr_val], axis = 1)
-          # print((np_current.shape))
 
 
     return np_current
 
 def plot_control_line(range, color):
 
-  # print(np.shape(max1))
   ctrl_line = np.ones((len(range),))
 
   x_axis = range
@@ -95,9 +86,6 @@ def plot_on_plt(plt, numpy_array, metric_name, range, color):
 
   x_axis = range
 
-  print(np.shape(x_axis))
-
-  # plt.figure(facecolor='white')
   plt.plot(x_axis, max1, color=color, label=metric_name)
 
 
@@ -114,12 +102,9 @@ np_shape_of_histories = connect_histories(PATH_TO_HISTORIES, "val_accuracy")
 
 
 # 16
-range1 = ["2", "4", "6",
- "8", "10", "12", 
- "14", "16", "18", 
- "20", "22", "24", 
- "26", "28", "30", 
- "32"]
+range1 = ["1", "5", "10",
+ "25", "50", "75", 
+ "100", "200"]
 
 # range2 = ['1', '5', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55', '60']
 
@@ -135,16 +120,14 @@ plt.xticks(size=7)
 
 plt.ylabel("Metric Value")
 #  fontsize=14)
-plt.xlabel("Resolutions")
-plt.title("Different Resolutions")
+plt.xlabel("Threshold")
+plt.title("Different Thresholds")
 
 
 np_shape_of_histories_acc = connect_histories(PATH_TO_HISTORIES, "val_accuracy")
 np_shape_of_histories_prec = connect_histories(PATH_TO_HISTORIES, "val_precision")
 np_shape_of_histories_recall = connect_histories(PATH_TO_HISTORIES, "val_recall")
 
-
-print(np.shape(np_shape_of_histories_acc))
 
 
 plt = plot_on_plt(plt, np_shape_of_histories_recall, "Validation Recall", compl_range, "green")

@@ -7,13 +7,17 @@ import os
 
 from matplotlib import pyplot as plt
 
+#tool to plot rates from given histories e. g. false negative rate
+#needs adjusting in the config commented parts
+
+#argv1 is a folder -> example /home/historyX/
+
+# OUTPUT: plot is saved to location of history folde
+
 
 def load_pkl(target_path):
   df = pd.read_pickle(target_path)
 
-#needed for debuging
-  # df.plot(figsize=(8,5))
-  # plt.show()
   return df
 
 def connect_histories(path, metric_name_in_df):
@@ -31,16 +35,9 @@ def connect_histories(path, metric_name_in_df):
         for file in file:
 
             if(file.endswith(".pkl")):
-                # print(os.path.join(root,file))
                 path = os.path.join(root,file)
-                #order does not matter?!
-                # in every no matter which order red pkl it gets order from the epoch
                 counter = counter + 1
-
-                # print("debug loading pkl")
                 history = load_pkl(path)
-
-                #a column is imported as a series logic below forces dataframes!
                 df = history[metric_name_in_df].to_frame()               
 
                 numpy_array_itr_val = df.to_numpy()
@@ -52,15 +49,8 @@ def connect_histories(path, metric_name_in_df):
                 else:
 
                     np_current = np.concatenate([np_current, numpy_array_itr_val], axis = 1)
-                    # print((np_current.shape))
-
-    # print("finished loop----------------------")
-
-    #     #need epochs,learning_runs
-    # print(np_current.shape)
 
     print("Found : " + str(counter) + " histories")
-
 
     return np_current
 
@@ -69,16 +59,6 @@ def calc_fnr_on_epochs(np_shape_fn, np_shape_tp, epochs):
 
 
   column_list = []
-
-  # fn_val_in_epoch_i = np_shape_fn[0]
-  # tp_val_in_epoch_i = np_shape_tp[0]
-
-  # # print(np_shape_fn[0])
-  # # print(np_shape_tp[0])
-
-  # rate = fn_val_in_epoch_i / (fn_val_in_epoch_i + tp_val_in_epoch_i)
-  # # print("rate")
-  # # print(rate)
 
   for i in range(epochs):
 

@@ -10,10 +10,6 @@ from matplotlib import pyplot as plt
 
 def load_pkl(target_path):
   df = pd.read_pickle(target_path)
-
-#needed for debuging
-  # df.plot(figsize=(8,5))
-  # plt.show()
   return df
 
 
@@ -26,7 +22,7 @@ def sort(lst):
 
 #function needed to prepare plot from multiple histories:
 #it returns a numpy shape of format:
-#
+
 def connect_histories(path, metric_name_in_df):
 
     np_current = None
@@ -44,10 +40,7 @@ def connect_histories(path, metric_name_in_df):
 
     for file in sorted_files:
 
-
-
         compl_path = path + file
-        # print(compl_path)
         counter = counter + 1
         history = load_pkl(compl_path)
         df = history[metric_name_in_df].to_frame() 
@@ -60,8 +53,6 @@ def connect_histories(path, metric_name_in_df):
 
         else:
           np_current = np.concatenate([np_current, numpy_array_itr_val], axis = 1)
-          # print((np_current.shape))
-
 
     return np_current
 
@@ -124,11 +115,6 @@ np_shape_of_histories_fn = connect_histories(PATH_TO_HISTORIES, "val_FN")
 
 #mean over all epochs
 # max1 = np.array(np_shape_of_histories_fn.max(axis=0))
-
-# print(np_shape_of_histories_fn.shape)
-
-# print(max1.shape)
-# print(max1[1])
 
 #FNR = FN / FN + TP
 def calc_fnr(np_shape_fn, np_shape_tp , xticks, epochs):

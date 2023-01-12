@@ -10,10 +10,6 @@ from matplotlib import pyplot as plt
 
 def load_pkl(target_path):
   df = pd.read_pickle(target_path)
-
-#needed for debuging
-  # df.plot(figsize=(8,5))
-  # plt.show()
   return df
 
 
@@ -26,7 +22,7 @@ def sort(lst):
 
 #function needed to prepare plot from multiple histories:
 #it returns a numpy shape of format:
-#
+
 def connect_histories(path, metric_name_in_df):
 
     np_current = None
@@ -42,15 +38,12 @@ def connect_histories(path, metric_name_in_df):
     sorted_files = sorted(new_list,key=lambda x: float(x.replace("ROUND_1exposure_time_", "").replace("seconds.pkl", "")))
 
 
-    # print(sorted_files)
-
-
     for file in sorted_files:
 
 
 
         compl_path = path + file
-        # print(compl_path)
+        print(compl_path)
         counter = counter + 1
         history = load_pkl(compl_path)
         df = history[metric_name_in_df].to_frame() 
@@ -63,23 +56,25 @@ def connect_histories(path, metric_name_in_df):
 
         else:
           np_current = np.concatenate([np_current, numpy_array_itr_val], axis = 1)
-          # print((np_current.shape))
 
 
     return np_current
 
 
+def plot_control_line(range, color):
 
-# def plot_control_line(range, color):
+  ctrl_line = np.ones((22,))
 
-#   # print(np.shape(max1))
-#   ctrl_line = np.ones((22,))
+  x_axis = range
 
-#   x_axis = range
+  plt.plot(x_axis, ctrl_line, color=color, label="1.0", linestyle='--')
 
-#   plt.plot(x_axis, ctrl_line, color=color, label="1.0", linestyle='--')
+  return plt
 
-#   return plt
+
+
+
+
 
 
 def plot_on_plt(plt, numpy_array, metric_name, range, color):
@@ -88,7 +83,6 @@ def plot_on_plt(plt, numpy_array, metric_name, range, color):
 
   x_axis = range
 
-  # plt.figure(facecolor='white')
   plt.plot(x_axis, max1, color=color, label=metric_name)
 
 
@@ -105,6 +99,15 @@ def plot_one_subplot():
 PATH_TO_HISTORIES = str(sys.argv[1])
 
 
+# OUT_PATH = str(sys.argv[2])
+
+import matplotlib.gridspec as gridspec
+
+gs = gridspec.GridSpec(4, 4)
+
+
+
+np_shape_of_histories = connect_histories(PATH_TO_HISTORIES, "val_accuracy")
 
 
 range1 = ['0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9']
@@ -114,10 +117,9 @@ range2 = ['1', '5', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55', 
 
 compl_range = range1 + range2
 
+# plt.subplots(1) 
 
-import matplotlib.gridspec as gridspec
 
-gs = gridspec.GridSpec(4, 4)
 
 fig = plt.figure(figsize=(30, 40))
 
@@ -126,22 +128,19 @@ widthEach = 45
 xytickFontsize=40
 labelsize=40
 legendsize=40
-pad_inches=0.1
+padInch=0.1
 
-
-np_shape_of_histories_fp = connect_histories(PATH_TO_HISTORIES, "val_FP")
-np_shape_of_histories_fn = connect_histories(PATH_TO_HISTORIES, "val_FN")
-# np_shape_of_histories_recall = connect_histories(PATH_TO_HISTORIES, "val_recall")
-
+np_shape_of_histories_acc = connect_histories(PATH_TO_HISTORIES, "val_accuracy")
+np_shape_of_histories_prec = connect_histories(PATH_TO_HISTORIES, "val_precision")
+np_shape_of_histories_recall = connect_histories(PATH_TO_HISTORIES, "val_recall")
 
 
 
-# # , marker="*"
 
 
 #----------------------------------------------------------------------------------------------------
 
-max1 = np.array(np_shape_of_histories_fn.mean(axis=0))
+max1 = np.array(np_shape_of_histories_acc.max(axis=0))
 
 
 x = compl_range
@@ -149,115 +148,102 @@ y = max1
 
 
 plt.subplot(gs[:2, :2])
-
-
 fig.set_figwidth(widthEach)
 
-plt.ylim([0, 35])
+plt.ylim([0.85, 1.01])
 
-plt.xticks(fontsize=xytickFontsize, rotation=45)
+plt.xticks(fontsize=xytickFontsize,  rotation=45)
 plt.yticks(fontsize=xytickFontsize)
 
-plt.ylabel("Total Amount", fontsize=labelsize)
+plt.ylabel("Accuracy", fontsize=labelsize)
 #  fontsize=14)
 plt.xlabel("Exposure Times in Seconds", fontsize=labelsize)
 # plt.title("Different Exposure Times")
 
-# ctrl_line = np.ones((22,))
+ctrl_line = np.ones((22,))
 
-# x_axis = compl_range
+x_axis = compl_range
 
-# plt.plot(x_axis, ctrl_line, color="black", label="1.0", linestyle='--')
+plt.plot(x_axis, ctrl_line, color="black", label="1.0", linestyle='--')
 
 
 
-plt.plot(x,y, label="False Negative", color="orange")
-plt.legend(loc="upper right", prop={'size': legendsize})
+plt.plot(x,y, label="Accuracy Maximum", color="red")
+plt.legend(loc="lower right",  prop={'size': legendsize})
 
 
 
 #----------------------------------------------------------------------------------------------------
 
 plt.subplot(gs[:2, 2:])
-
 fig.set_figwidth(widthEach)
-
-max2 = np.array(np_shape_of_histories_fp.mean(axis=0))
+max2 = np.array(np_shape_of_histories_prec.max(axis=0))
 
 
 x = compl_range
 y = max2
 
 
-plt.ylim([0, 35])
+plt.ylim([0.85, 1.01])
 
 plt.xticks(fontsize=xytickFontsize, rotation=45)
 plt.yticks(fontsize=xytickFontsize)
 
-plt.ylabel("Total Amount", fontsize=labelsize)
+plt.ylabel("Precision", fontsize=labelsize)
 #  fontsize=14)
 plt.xlabel("Exposure Times in Seconds", fontsize=labelsize)
+# plt.title("Different Exposure Times")
+
+ctrl_line = np.ones((22,))
+
+x_axis = compl_range
+
+plt.plot(x_axis, ctrl_line, color="black", label="1.0", linestyle='--')
 
 
 
+plt.plot(x,y, label="Precision Maximum", color="Green")
 
-plt.plot(x,y, label="False Positive", color="red")
-
-plt.legend(loc="upper right", prop={'size': legendsize})
+plt.legend(loc="lower right",  prop={'size': legendsize})
 
 #----------------------------------------------------------------------------------------------------
-
 
 
 plt.subplot(gs[2:4, 1:3])
-
-# max2 = np.array(np_shape_of_histories_fp.mean(axis=0))
-
-# splitseconds input data
-# [275574, 137890, 92002, 69054, 55284, 46102, 39550, 34636, 30810]
-
-# size = 9 + 13?
-
-split_seconds_sizes = [275574, 137890, 92002, 69054, 55284, 46102, 39550, 34636, 30810]
-sec_to_min_sizes = [27748, 5736, 2862, 1818, 1324, 1010, 814, 684, 568, 470, 420, 364, 320]
-
-y_range = split_seconds_sizes + sec_to_min_sizes
-
-max2 = y_range
+fig.set_figwidth(widthEach)
+max3 = np.array(np_shape_of_histories_recall.max(axis=0))
 
 
 x = compl_range
-y = max2
+y = max3
 
 
-plt.ylim([0, 275574])
+plt.ylim([0.85, 1.01])
 
-plt.xticks(fontsize=xytickFontsize, rotation=45)
+plt.xticks(fontsize=xytickFontsize,  rotation=45)
 plt.yticks(fontsize=xytickFontsize)
 
-plt.ylabel("Total Amount", fontsize=labelsize)
+plt.ylabel("Recall", fontsize=labelsize)
 #  fontsize=14)
 plt.xlabel("Exposure Times in Seconds", fontsize=labelsize)
+# plt.title("Different Exposure Times")
 
+ctrl_line = np.ones((22,))
 
-# # creating the bar plot
-# plt.bar(courses, values, color ='maroon',
-#         width = 0.4)
+x_axis = compl_range
 
-plt.bar(x,y, color="blue",label="Balanced Sample Size", width = 0.4)
+plt.plot(x_axis, ctrl_line, color="black", label="1.0", linestyle='--')
 
-# plt.plot(x,y, label="FP", color="Red")
+plt.plot(x,y, label="Recall Maximum", color="Blue")
+plt.legend(loc="lower right",  prop={'size': legendsize})
 
-plt.legend(loc="upper right", prop={'size': legendsize})
-
-#----------------------------------------------------------------------------------------------------
 
 fig.subplots_adjust(hspace=0.5)
 fig.subplots_adjust(wspace=0.5)
 
 
-plt.savefig(str(PATH_TO_HISTORIES) + "exp_time_plotsTOTALS.png",pad_inches=pad_inches, bbox_inches="tight", dpi=100)
-# plt.savefig(str(OUT_PATH),  bbox_inches="tight")
 
+plt.savefig(str(PATH_TO_HISTORIES) + "exp_time_plots.png", bbox_inches="tight", pad_inches=padInch, dpi=100)
 plt.show()
+
 
