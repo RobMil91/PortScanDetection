@@ -3,7 +3,7 @@ echo READING CONFIG
 #need to be changed detection to system
 #line is given and can be written as needed --------------------------need to be changed!
 OUTPUT_FOLDER_PATH=~/workspace/data/learnPlot/
-IDT_LOC=/home/robin/workspace/MA_Thesis/ID2T/id2t
+IDT_LOC=
 PCAP_PATH_ORG=~/workspace/data/control_exp/portscan_2_min_20221017-155525.pcap
 
 #config the attack

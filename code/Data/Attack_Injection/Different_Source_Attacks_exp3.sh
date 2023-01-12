@@ -3,7 +3,7 @@
 echo READING CONFIG
 
 #need to be changed acc to system
-IDT_LOC=/home/robin/workspace/MA_Thesis/ID2T/id2t
+IDT_LOC=
 PCAP_PATH_ORG=~/data/background_traffic_14-14-30.pcap
 
 #line is given and can be written as needed --------------------------need to be changed!

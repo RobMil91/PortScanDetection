@@ -4,8 +4,10 @@ echo READING CONFIG
 
 #need to be changed acc to system
 #line is given and can be written as needed --------------------------need to be changed!
+
+raise("need to config file!")
 FOLDER_PATH=~/pip_workflow/9_diff_ip_attacks/exp_2_tmp/
-IDT_LOC=/home/robin/workspace/MA_Thesis/ID2T/id2t
+IDT_LOC=
 PCAP_PATH_ORG=~/data/background_traffic_14-14-30.pcap
 
 # monday: start 1499082958.598308
@@ -159,13 +161,6 @@ echo Packet LABELING
 
 python3 ../Label_Generator/ONE_TARGET_LABEL.py $IP_DST_VICTIM $OUT_CSV $LABELD_OUT_CSV
 
-# echo WRITING AGGREGATION MAPS
-
-# python3 ../Detection_workflow/Workflow.py $LABELD_OUT_CSV $OUT_PATH_MAPs $TOTAL_MAPS $THRESHOLD_PORTSCAN $MAP_RES_X $MAP_RES_Y $MAX_CHECKED_PORTS
-
-# echo "CLEANUP tmp files"
-
-# rm -r "$FOLDER_PATH/tmp";
 
 #needed to save the configuration
 cp Different_Source_Attacks_exp2.sh "$FOLDER_PATH/"

@@ -4,7 +4,7 @@ echo READING CONFIG
 
 BASE_PATH=~/workspace/data/experiment1/1run_diff_resolution/maps/
 
-OUT_PATH=/home/robin/workspace/data/experiment1/1run_diff_resolution/results/
+OUT_PATH=
 
 #pkl naming --> each new result name will be saved individually, therefore more histories and models can be created
 NAME="ROUND_1"
