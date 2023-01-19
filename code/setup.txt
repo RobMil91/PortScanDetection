@@ -1,11 +1,9 @@
 #tested under debian system
 
 
-pip installs:
+pip installs *
 
-
-
-
+--recommend to configure grafic card for Keras e.g. CUDA
 
 linking for IDT2:
 
