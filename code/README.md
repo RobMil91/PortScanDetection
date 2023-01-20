@@ -33,10 +33,7 @@ This project contains a Detection Approach for Portscans with Machine Learning (
 
 --------------------------------------------------------------
 
-##Tool kit example commands:
-
-
-Example Commands:
+## Tool kit example commands:
 
 # shows the amount of labeled maps
 pyhon3 analyzse_aggr_maps_folder.py ~/pip_workflow/experiment2/results/
