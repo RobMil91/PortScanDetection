@@ -28,10 +28,10 @@ This project contains a Detection Approach for Portscans with Machine Learning (
  - Convert PCAP to csv 
    ``` tshark -r injected_attack.pcap -t ud -T fields -e ip.src -e ip.dst -e tcp.srcport  -e tcp.dstport  -e udp.srcport  -e udp.dstport -e ip.proto -e    frame.time -e _ws.col.Time -e frame.time_epoch -e frame.protocols -E separator=, -E quote=d, -E header=y > unlabeled_trace.csv```
    
- - label the csv 
+ - Label the csv 
     ```python3 Data/Label_Generator/ONE_TARGET_LABEL.py 192.168.0.5 unlabeled_trace.csv aggregation_ready_trace.csv```
 
-- run Detection (includes Map creation, splitting in Training/Validation) creates a Folder Structure with Log Files
+- Run Detection (includes Map creation, splitting in Training/Validation) creates a Folder Structure with Log Files
     ```bash run_detection.sh aggregation_ready_trace.csv```
 
 
