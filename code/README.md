@@ -10,6 +10,9 @@ This project contains a Detection Approach for Portscans with Machine Learning (
 - Keras ML CNN trains supervised and predicts based on the trained Model
 - The created Histories from the Testing/Training Phase from the ML Model can be plotted (metrics like accuracy, precision, recall are used)
 
+# In depth discussed in Thesis:
+- https://github.com/RobMil91/PortScanDetection/blob/main/thesis/Aggregated_Traffic_ML_Detection.pdf
+
 # Example Workflow:
 
 - generate  PCAP file
