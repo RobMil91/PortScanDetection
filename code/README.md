@@ -52,8 +52,6 @@ This project contains a Detection Approach for Portscans with Machine Learning (
 - display one history
 ```python3 plot_1_history.py ~/pip_workflow/experiment1/results/round1.pkl ~/pip_workflow/experiment1/results/metrics/```
 
-```python3 check_history_columns.py ~/pip_workflow/experiment1/result_histories/ROUND_10.pkl ```
-
 - scan csv file for an attack
 ```python3 FIND_ATTACK.py  "110.110.110.110" "12.12.12.12" 1 1 "~/pip_workflow/experiment8/tmp/injected_attack.csv" ```
 
