@@ -24,9 +24,9 @@ This project contains a Detection Approach for Portscans with Machine Learning (
 - ID2T is a great Attack Injection Tool that can be found at: https://github.com/tklab-tud/ID2T
 
 -  Label the PCAP File and Format Columns to create csv File that is ready for Map building:
-    - Convert PCAP to csv 
-   ``` tshark -r injected_attack.pcap -t ud -T fields -e ip.src -e ip.dst -e tcp.srcport  -e tcp.dstport  -e udp.srcport  -e udp.dstport -e ip.proto -e    frame.time -e _ws.col.Time -e frame.time_epoch -e frame.protocols -E separator=, -E quote=d, -E header=y > unlabeled_trace.csv```
-   - Label the csv 
+    - Convert PCAP to csv \
+   ```tshark -r injected_attack.pcap -t ud -T fields -e ip.src -e ip.dst -e tcp.srcport  -e tcp.dstport  -e udp.srcport  -e udp.dstport -e ip.proto -e    frame.time -e _ws.col.Time -e frame.time_epoch -e frame.protocols -E separator=, -E quote=d, -E header=y > unlabeled_trace.csv```
+   - Label the csv \
     ```python3 Data/Label_Generator/ONE_TARGET_LABEL.py 192.168.0.5 unlabeled_trace.csv aggregation_ready_trace.csv```
 
 - Run Detection (includes Map creation, splitting in Training/Validation) creates a Folder Structure with Log Files
