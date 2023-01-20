@@ -1,7 +1,8 @@
 ## What is it?
-This project contains a Detection Approach for Portscans with Machine Learning (ML). The process is:
+This project contains a Detection Approach for Portscans with Machine Learning (ML). 
 
-- Network Traffic (PCAP File)
+# In a Nutshell:
+- Aquire Network Traffic (PCAP File)
 - format to csv ( & adjust Packet attributes)
 - build Maps ( 2-Dimensional Representation of a defined Time Window of Network Traffic)
     - The Maps use axis like Source IP Address and Destination Port to display the Network Traffic
@@ -9,7 +10,7 @@ This project contains a Detection Approach for Portscans with Machine Learning (
 - Keras ML CNN trains supervised and predicts based on the trained Model
 - The created Histories from the Testing/Training Phase from the ML Model can be plotted (metrics like accuracy, precision, recall are used)
 
-# Workflow
+# Example Workflow:
 
 - generate  PCAP file
 (can be written with wireshark/tshark or downloaded from benchmark sources -> should include port scan behavior with known attacker!)
