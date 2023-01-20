@@ -5,7 +5,7 @@ This project contains a Detection Approach for Portscans with Machine Learning (
 - Aquire Network Traffic (PCAP File)
 - Format to csv ( & adjust Packet attributes)
 - Build maps ( 2-Dimensional Representation of a defined Time Window of Network Traffic)
-    - The Maps use axis like Source IP Address and Destination Port to display the Network Traffic
+    - The Maps use axis Source IP Address and Destination Port to display the Network Traffic
 - Label Maps
 - Keras ML CNN trains supervised and predicts based on the trained Model
 - The created Histories from the Testing/Training Phase from the ML Model can be plotted (metrics like accuracy, precision, recall are used)
