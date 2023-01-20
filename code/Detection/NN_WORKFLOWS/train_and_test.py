@@ -1,6 +1,5 @@
 
 
-
 from matplotlib.colors import from_levels_and_colors
 import pandas as pandas
 from NN import *
@@ -13,14 +12,13 @@ from keras.utils import plot_model
 import sys
 
 
-# this modul is needed to train on given csv folder 
-#it returns the model in keras saving format and the history
-#they are given on the specified output folder, that needs to be initalizsed
+# this modul is needed to train on given csv folder
+# it returns the model in keras saving format and the history
+# they are given on the specified output folder, that needs to be initalizsed
 
-if(str(sys.argv[1]) == "--help"):
+if (str(sys.argv[1]) == "--help"):
     print("argv1 == PATH_AGGREGATION_MAPS")
     print("argv2 == model resolution")
-
 
 
 PATH_TO_MAPS = str(sys.argv[1])
@@ -48,27 +46,27 @@ model = getModel(RESOLUTION_X)
 print("Get info on input data: --------------------------------------------------------------------------------")
 
 
-#z scoring happens HERE!
-(x_train, y_train) = get_NN_train_input(tupel_list_train, RESOLUTION_X, RESOLUTION_X)
-(x_val_test, y_val_test)= get_NN_train_input(tupel_list_validation, RESOLUTION_X, RESOLUTION_X)
+# z scoring happens HERE!
+(x_train, y_train) = get_NN_train_input(
+    tupel_list_train, RESOLUTION_X, RESOLUTION_X)
+(x_val_test, y_val_test) = get_NN_train_input(
+    tupel_list_validation, RESOLUTION_X, RESOLUTION_X)
 
 
-
-#needed to shuffle learn data and test data
-X,Y = shuffle(x_train, y_train)
-X_val,Y_val = shuffle(x_val_test, y_val_test)
+# needed to shuffle learn data and test data
+X, Y = shuffle(x_train, y_train)
+X_val, Y_val = shuffle(x_val_test, y_val_test)
 
 
 history = model.fit(x=X, y=Y,
-          batch_size=batch_size, 
-          epochs=epochs,verbose=1,
-          validation_data=(X_val, Y_val),
-        #   shuffle=True
-          )
+                    batch_size=batch_size,
+                    epochs=epochs, verbose=1,
+                    validation_data=(X_val, Y_val),
+                    #   shuffle=True
+                    )
 
 
-
-#save the history of the current run
+# save the history of the current run
 save_compl_history(history, OUTPUT_PATH, OUTPUT_NAME)
 
 outpath_model = OUTPUT_PATH + OUTPUT_NAME
@@ -76,6 +74,5 @@ print(outpath_model)
 model.save(outpath_model)
 
 
-
-#debug statement for checking the different layers
+# debug statement for checking the different layers
 # print(model.summary())

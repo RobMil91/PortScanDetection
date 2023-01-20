@@ -3,10 +3,10 @@ from simple_CNN import *
 from NN_UTILS import *
 import sys
 
-# this modul is needed to train on given folder with csvs contained as vectors 
-#it returns the model in keras saving format and the history
-#they are given on the specified output folder, that needs to be initalizsed
-if(str(sys.argv[1]) == "--help"):
+# this modul is needed to train on given folder with csvs contained as vectors
+# it returns the model in keras saving format and the history
+# they are given on the specified output folder, that needs to be initalizsed
+if (str(sys.argv[1]) == "--help"):
     print("argv1 == PATH_AGGREGATION_MAPS")
     print("argv2 == model resolution")
 
@@ -33,10 +33,10 @@ model = getModel(RESOLUTION_X)
 
 print("Get info on input data: --------------------------------------------------------------------------------")
 
-#extract the maps and labels from folder
+# extract the maps and labels from folder
 tupel_list = get_vector_maps_labels(PATH_TO_MAPS)
 
-#z scoring happens HERE!
+# z scoring happens HERE!
 (x_train, y_train) = get_NN_train_input(tupel_list, RESOLUTION_X, RESOLUTION_X)
 
 
@@ -45,17 +45,16 @@ print(y_train.shape)
 print(x_train[0].shape)
 
 
-X,Y = shuffle(x_train, y_train)
-
+X, Y = shuffle(x_train, y_train)
 
 
 history = model.fit(x=X, y=Y,
-          batch_size=batch_size, 
-          epochs=epochs,verbose=1,
-          validation_split=validation_split,
-          )
+                    batch_size=batch_size,
+                    epochs=epochs, verbose=1,
+                    validation_split=validation_split,
+                    )
 
-#save the history of the current classification
+# save the history of the current classification
 print("---LOG: saving the history to PATH: " + str(OUTPUT_PATH))
 save_compl_history(history, OUTPUT_PATH, OUTPUT_NAME)
 
@@ -70,5 +69,5 @@ with open(OUTPUT_PATH + OUTPUT_NAME + '_metadata.txt', 'a') as f1:
     f1.write("x_train.shape: " + str(x_train.shape) + os.linesep)
     f1.write("y_train.shape: " + str(y_train.shape) + os.linesep)
 
-#debug statement for checking the different layers
+# debug statement for checking the different layers
 print(model.summary())

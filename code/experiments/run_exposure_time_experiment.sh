@@ -1,5 +1,3 @@
-
-
 # Configuration:
 PCAP_Location=$1
 IDT_LOC=~/workspace/MA_Thesis/ID2T/id2t
@@ -19,8 +17,6 @@ VICTIM_Node_IP="9.8.7.6"
 #time between each attack!
 NO_Attack_Timer=30
 
-
-
 #------------------------------------------------------------config  aggregation:
 
 Complete_Seconds_in_CSV=900
@@ -33,8 +29,6 @@ MAP_RESOULTION=32
 #Given to decide the range of the y-axis in port totals -> std is all ports, if 1000 ports all above ports are ignored.
 MAX_CHECKED_PORTS=65536
 
-
-
 #----------------------------------------------------- config CNN classification:
 
 aggr_maps_path=~/PortScanDetectionExperiments/ExposureTimeExperiments/maps/
@@ -45,29 +39,23 @@ results_path=~/PortScanDetectionExperiments/ExposureTimeExperiments/results/
 # BATCH_SIZE=128
 # VALIDATION_SPLIT=0.2
 
-
-
-
 mkdir ~/PortScanDetectionExperiments/
 
 # echo "--LOG: $Experiment_Folder $IDT_LOC $PCAP_Location $ATTACK_START_TIMESTAMP $Buckets_that_PortScan $AMMOUNT_ATTACKS_PER_Attacker $Start_Port $End_Port "$VICTIM_Node_IP" $NO_Attack_Timer > ~/PortScanDetectionExperiments/attackInjectionLog.txt"
 
-bash parameter_scripts/inject_32_Attacks.sh $Experiment_Folder $IDT_LOC $PCAP_Location $ATTACK_START_TIMESTAMP $Buckets_that_PortScan $AMMOUNT_ATTACKS_PER_Attacker $Start_Port $End_Port "$VICTIM_Node_IP" $NO_Attack_Timer > ~/PortScanDetectionExperiments/attackInjectionLog.txt
+bash parameter_scripts/inject_32_Attacks.sh $Experiment_Folder $IDT_LOC $PCAP_Location $ATTACK_START_TIMESTAMP $Buckets_that_PortScan $AMMOUNT_ATTACKS_PER_Attacker $Start_Port $End_Port "$VICTIM_Node_IP" $NO_Attack_Timer >~/PortScanDetectionExperiments/attackInjectionLog.txt
 
 # echo "--LOG: $Experiment_Folder $IDT_LOC $PCAP_Location $ATTACK_START_TIMESTAMP $Buckets_that_PortScan $AMMOUNT_ATTACKS_PER_Attacker $Start_Port $End_Port "$VICTIM_Node_IP" $NO_Attack_Timer > ~/PortScanDetectionExperiments/attackInjectionLog.txt"
 
-bash parameter_scripts/aggregateSeconds.sh ~/PortScanDetectionExperiments/ExposureTimeExperiments/tmp/injected_attack_labeled.csv ~/PortScanDetectionExperiments/ExposureTimeExperiments/ $Complete_Seconds_in_CSV $MAP_THRESHOLD_PORTSCAN $MAP_RESOULTION $MAX_CHECKED_PORTS > ~/PortScanDetectionExperiments/aggregationLog.txt
+bash parameter_scripts/aggregateSeconds.sh ~/PortScanDetectionExperiments/ExposureTimeExperiments/tmp/injected_attack_labeled.csv ~/PortScanDetectionExperiments/ExposureTimeExperiments/ $Complete_Seconds_in_CSV $MAP_THRESHOLD_PORTSCAN $MAP_RESOULTION $MAX_CHECKED_PORTS >~/PortScanDetectionExperiments/aggregationLog.txt
 
 echo "------------------------------------------------Aggregation Complete--------------------------------------"
 
 ../tools/balance_experiment.py ~/PortScanDetectionExperiments/ExposureTimeExperiments/maps/
 
-
 echo "------------------------------------------------Balancing Complete--------------------------------------"
 
-
-bash parameter_scripts/classify.sh $aggr_maps_path $results_path > ~/PortScanDetectionExperiments/detectionLog.txt
-
+bash parameter_scripts/classify.sh $aggr_maps_path $results_path >~/PortScanDetectionExperiments/detectionLog.txt
 
 echo "------------------------------------------------Detection Complete--------------------------------------"
 

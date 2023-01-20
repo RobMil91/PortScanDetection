@@ -6,20 +6,17 @@ from NN_UTILS import *
 
 import timeit
 
-#needs to be configured from comments below!
+# needs to be configured from comments below!
 
-#this modul is given to accept a given model -> need absolut folder path!
-#it tests with the model on given test data
-#the result history and the new model are placed in the test data folder (since the data there was tested)
-#folder needs to be provided before!
-#this modul is designed to be used with a bash script
+# this modul is given to accept a given model -> need absolut folder path!
+# it tests with the model on given test data
+# the result history and the new model are placed in the test data folder (since the data there was tested)
+# folder needs to be provided before!
+# this modul is designed to be used with a bash script
 
 
-#for loading the model
+# for loading the model
 PATH_TO_MODEL = str(sys.argv[1])
-
-
-
 
 
 PATH_TO_TEST_MAPS = str(sys.argv[2])
@@ -30,12 +27,12 @@ validation_split = float(str(sys.argv[6]))
 
 
 OUTPUT_PATH = str(sys.argv[7])
-#outname is for the pkl of the history
+# outname is for the pkl of the history
 OUTPUT_NAME = str(sys.argv[8])
 
 NEW_MODEL_NAME = ""
 
-print("read model from: " +  str(PATH_TO_MODEL))
+print("read model from: " + str(PATH_TO_MODEL))
 
 print("epochs are: " + str(epochs))
 
@@ -48,30 +45,28 @@ print("validation_splitis: " + str(validation_split))
 print("Get input from csv path: --------------------------------------------------------------------------------")
 print("CSV_PATH to test data: " + str(PATH_TO_TEST_MAPS))
 
-#test/validation dataset
+# test/validation dataset
 tupel_list = get_vector_maps_labels(PATH_TO_TEST_MAPS)
 
 
-#this function only accepts absolut paths / returns model
+# this function only accepts absolut paths / returns model
 model = keras.models.load_model(PATH_TO_MODEL)
 
-#write path for the model picture
+# write path for the model picture
 # outpath = PATH_TO_MODEL + '/model.jpg'
 
 # #optional model print
 # plot_model(model, to_file=outpath, rankdir="LR", show_layer_names=False, show_layer_activations=True, show_dtype=False,dpi=400)
 
 
-
 print("Normalizsing data: --------------------------------------------------------------------------------")
-#z scoring happens HERE!
-#y_train are the labels! however if validation split is 1.0 it is all validation data
+# z scoring happens HERE!
+# y_train are the labels! however if validation split is 1.0 it is all validation data
 (x_test, y_test) = get_NN_train_input(tupel_list, RESOLUTION_X, RESOLUTION_X)
 
 
-
 # history = model.fit(x=x_test, y=y_test,
-#           batch_size=batch_size, 
+#           batch_size=batch_size,
 #           epochs=epochs,verbose=1,
 #           validation_split=validation_split,
 #           shuffle=True
@@ -88,7 +83,6 @@ print("Normalizsing data: ------------------------------------------------------
 # # at the end of each epoch
 # validation_data=(x_val, y_val),
 # )
-
 
 
 # runtime_of_predication = timeit.timeit(model.predict)
@@ -122,12 +116,10 @@ print("Normalizsing data: ------------------------------------------------------
 # print("--------------------------------------------------measure End----------------------")
 
 
-
 # mysetup = 'from __main__ import model, x_test, get_NN_train_input, tupel_list, RESOLUTION_X, keras, PATH_TO_MODEL'
 
 # # code snippet whose execution time is to be measured
 # mycode = '''
-
 
 
 model = keras.models.load_model(PATH_TO_MODEL)
@@ -138,43 +130,32 @@ pred = model.predict(x_test)
 
 
 # '''
- 
+
 # # timeit statement
 # print (timeit.timeit(setup = mysetup,
-#                      stmt = mycode, 
+#                      stmt = mycode,
 #                      number = 10000))
 
 
-
-# prediction = model.predict(x_test, verbose=1) 
+# prediction = model.predict(x_test, verbose=1)
 
 
 # # #these are the 2 arrays that predicted and returned
-# print(prediction.flatten()) 
+# print(prediction.flatten())
 # print(y_test)
 
 
-
-# print('Test loss:', score[0]) 
+# print('Test loss:', score[0])
 # print('Test accuracy:', score[1])
-
 
 
 # save_compl_history(history, OUTPUT_PATH, OUTPUT_NAME)
 
 
-#needed to save complete model
+# needed to save complete model
 # outpath_model = OUTPUT_PATH + "folder_of_model"
 # print(outpath_model)
 # model.save(outpath_model)
-
-
-
-
-
-
-
-
 
 
 # PATH_TO_TEST_DATA = str(sys.argv[2])
@@ -183,14 +164,6 @@ pred = model.predict(x_test)
 # model.predict()
 
 
-
-
-
-
-
-
 # outpath = OUTPUT_PATH + OUTPUT_NAME
 
 # print("wrote_new_model_TO: " + str(outpath))
-
-

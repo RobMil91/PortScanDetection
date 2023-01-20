@@ -31,51 +31,45 @@ echo "---LOG: Out Maps Specified: $FOLDER_PATH"
 echo "---LOG: Map Threshold: $MAP_THRESHOLD_PORTSCAN"
 echo "---LOG: MAX_CHECKED_PORTS: $MAX_CHECKED_PORTS"
 
-
-
 if [ ! -d $FOLDER_PATH ]; then
-echo "CREATING data temp and result folder at $FOLDER_PATH"
-mkdir -p $FOLDER_PATH;
-mkdir "$FOLDER_PATH/maps";
+    echo "CREATING data temp and result folder at $FOLDER_PATH"
+    mkdir -p $FOLDER_PATH
+    mkdir "$FOLDER_PATH/maps"
 fi
 
-
 echo "WRITING AGGREGATION MAPS"
-
 
 MAPS_CURRENT=1
 CURRENT_OUT_PATH=""
 
-for ((i=0; i<$diff_exposure_times; i++))
+for ((i = 0; i < $diff_exposure_times; i++)); do
+    echo "------------------------------------------------------------------------------Writing MAPS $i ---------------------------------------------------"
 
-do
-echo "------------------------------------------------------------------------------Writing MAPS $i ---------------------------------------------------"
+    echo "Current Exposure Time: ${timing_list[$i]}"
+    echo "Total Maps Created: "
+    echo "$ALL_SECONDS / ${timing_list[$i]}" | bc
 
-echo "Current Exposure Time: ${timing_list[$i]}"
-echo "Total Maps Created: "
-echo "$ALL_SECONDS / ${timing_list[$i]}" | bc
+    # 8h got 28800 seconds
+    # so 1 second means necessary to get 28800 maps
+    # 5 seconds means we cut down to 28800 / 5
+    # 10 seconds ... 28800 / 10
+    # This means always the complete traffic is used for aggregation relativ to the amount of seconds given
+    MAPS_CURRENT=$(echo "$ALL_SECONDS / ${timing_list[$i]}" | bc)
 
-# 8h got 28800 seconds 
-# so 1 second means necessary to get 28800 maps
-# 5 seconds means we cut down to 28800 / 5
-# 10 seconds ... 28800 / 10
-# This means always the complete traffic is used for aggregation relativ to the amount of seconds given
-MAPS_CURRENT=`echo "$ALL_SECONDS / ${timing_list[$i]}" | bc`
+    # MAPS_CURRENT=""$ALL_SECONDS / ${timing_list[$i]}" | bc"
+    CURRENT_OUT_PATH="${FOLDER_PATH}maps/exposure_time_${timing_list[$i]}seconds"
+    mkdir $CURRENT_OUT_PATH
+    CURRENT_OUT_PATH="${FOLDER_PATH}maps/exposure_time_${timing_list[$i]}seconds/"
 
-# MAPS_CURRENT=""$ALL_SECONDS / ${timing_list[$i]}" | bc" 
-CURRENT_OUT_PATH="${FOLDER_PATH}maps/exposure_time_${timing_list[$i]}seconds"
-mkdir $CURRENT_OUT_PATH
-CURRENT_OUT_PATH="${FOLDER_PATH}maps/exposure_time_${timing_list[$i]}seconds/"
+    echo "Writing MAPS to path"
 
-echo "Writing MAPS to path"
+    echo "../build_maps.py $LABELD_CSV $CURRENT_OUT_PATH $MAPS_CURRENT $THRESHOLD_PORTSCAN $MAP_RES_X $MAP_RES_Y $MAX_CHECKED_PORTS "
 
-echo "../build_maps.py $LABELD_CSV $CURRENT_OUT_PATH $MAPS_CURRENT $THRESHOLD_PORTSCAN $MAP_RES_X $MAP_RES_Y $MAX_CHECKED_PORTS "
+    python3 Data/Aggregation/build_maps.py $LABELD_CSV $CURRENT_OUT_PATH $MAPS_CURRENT $MAP_THRESHOLD_PORTSCAN $MAP_RES_X $MAP_RES_Y $MAX_CHECKED_PORTS
 
-python3 Data/Aggregation/build_maps.py $LABELD_CSV $CURRENT_OUT_PATH $MAPS_CURRENT $MAP_THRESHOLD_PORTSCAN $MAP_RES_X $MAP_RES_Y $MAX_CHECKED_PORTS 
+    echo "---LOG: Aggregated CSV $LABELD_CSV to file $CURRENT_OUT_PATH ; $MAPS_CURRENT aggregation maps got created; Threshold is: $MAP_THRESHOLD_PORTSCAN; Resolution is: $MAP_RES_X; $MAX_CHECKED_PORTS ports got checked"
 
-echo "---LOG: Aggregated CSV $LABELD_CSV to file $CURRENT_OUT_PATH ; $MAPS_CURRENT aggregation maps got created; Threshold is: $MAP_THRESHOLD_PORTSCAN; Resolution is: $MAP_RES_X; $MAX_CHECKED_PORTS ports got checked"
-
-echo "------------------------------------------------------------------------------end $i ---------------------------------------------------"
+    echo "------------------------------------------------------------------------------end $i ---------------------------------------------------"
 done
 
 #needed to save the configuration

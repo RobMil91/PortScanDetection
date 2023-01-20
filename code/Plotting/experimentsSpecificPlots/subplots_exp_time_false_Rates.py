@@ -9,19 +9,18 @@ from matplotlib import pyplot as plt
 
 
 def load_pkl(target_path):
-  df = pd.read_pickle(target_path)
-  return df
-
+    df = pd.read_pickle(target_path)
+    return df
 
 
 def sort(lst):
 
-  lst.sort(key = str)
-  return lst
+    lst.sort(key=str)
+    return lst
 
 
-#function needed to prepare plot from multiple histories:
-#it returns a numpy shape of format:
+# function needed to prepare plot from multiple histories:
+# it returns a numpy shape of format:
 
 def connect_histories(path, metric_name_in_df):
 
@@ -35,48 +34,47 @@ def connect_histories(path, metric_name_in_df):
 
     new_list = [item for item in list_of_paths if (".pkl" in item)]
 
-    sorted_files = sorted(new_list,key=lambda x: float(x.replace("ROUND_1exposure_time_", "").replace("seconds.pkl", "")))
-
+    sorted_files = sorted(new_list, key=lambda x: float(
+        x.replace("ROUND_1exposure_time_", "").replace("seconds.pkl", "")))
 
     for file in sorted_files:
 
         compl_path = path + file
         counter = counter + 1
         history = load_pkl(compl_path)
-        df = history[metric_name_in_df].to_frame() 
+        df = history[metric_name_in_df].to_frame()
 
         numpy_array_itr_val = df.to_numpy()
 
-        if(flag_first == 1):
-          flag_first = 0
-          np_current = numpy_array_itr_val
+        if (flag_first == 1):
+            flag_first = 0
+            np_current = numpy_array_itr_val
 
         else:
-          np_current = np.concatenate([np_current, numpy_array_itr_val], axis = 1)
+            np_current = np.concatenate(
+                [np_current, numpy_array_itr_val], axis=1)
 
     return np_current
 
 
-
 def plot_on_plt(plt, numpy_array, metric_name, range, color):
 
-  max1 = np.array(numpy_array.max(axis=0))
+    max1 = np.array(numpy_array.max(axis=0))
 
-  x_axis = range
+    x_axis = range
 
-  # plt.figure(facecolor='white')
-  plt.plot(x_axis, max1, color=color, label=metric_name)
+    # plt.figure(facecolor='white')
+    plt.plot(x_axis, max1, color=color, label=metric_name)
 
-
-  return plt
-
+    return plt
 
 
 def plot_one_subplot():
 
-  return 0
+    return 0
 
-#--------------------------------------------running code----------------
+# --------------------------------------------running code----------------
+
 
 PATH_TO_HISTORIES = str(sys.argv[1])
 
@@ -84,19 +82,16 @@ PATH_TO_HISTORIES = str(sys.argv[1])
 # OUT_PATH = str(sys.argv[2])
 
 
-
-
-
 np_shape_of_histories = connect_histories(PATH_TO_HISTORIES, "val_accuracy")
 
 
 range1 = ['0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9']
 
-range2 = ['1', '5', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55', '60']
+range2 = ['1', '5', '10', '15', '20', '25',
+          '30', '35', '40', '45', '50', '55', '60']
 
 
 compl_range = range1 + range2
-
 
 
 np_shape_of_histories_tp = connect_histories(PATH_TO_HISTORIES, "val_TP")
@@ -106,72 +101,71 @@ np_shape_of_histories_fn = connect_histories(PATH_TO_HISTORIES, "val_FN")
 # np_shape_of_histories_recall = connect_histories(PATH_TO_HISTORIES, "val_recall")
 
 
-
-
 # # , marker="*"
 
 
-#----------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------
 
-#mean over all epochs
+# mean over all epochs
 # max1 = np.array(np_shape_of_histories_fn.max(axis=0))
 
-#FNR = FN / FN + TP
-def calc_fnr(np_shape_fn, np_shape_tp , xticks, epochs):
+# FNR = FN / FN + TP
+def calc_fnr(np_shape_fn, np_shape_tp, xticks, epochs):
 
-  new_array = []
+    new_array = []
 
-  for j in range(xticks):
+    for j in range(xticks):
 
-    column_list = []
+        column_list = []
 
-    for i in range(epochs):
+        for i in range(epochs):
 
-      fn_val_in_epoch_i_at_exp_t_j = np_shape_fn[i][j]
-      tp_val_in_epoch_i_at_exp_t_j = np_shape_tp[i][j]
+            fn_val_in_epoch_i_at_exp_t_j = np_shape_fn[i][j]
+            tp_val_in_epoch_i_at_exp_t_j = np_shape_tp[i][j]
 
-      column_list.append(fn_val_in_epoch_i_at_exp_t_j / (fn_val_in_epoch_i_at_exp_t_j + tp_val_in_epoch_i_at_exp_t_j))
+            column_list.append(fn_val_in_epoch_i_at_exp_t_j /
+                               (fn_val_in_epoch_i_at_exp_t_j + tp_val_in_epoch_i_at_exp_t_j))
 
-    new_array.append(column_list)
+        new_array.append(column_list)
 
-  fnr = np.array(np.array(new_array).mean(axis=1))
+    fnr = np.array(np.array(new_array).mean(axis=1))
 
+    return fnr
 
-  return fnr
-
-#FPR = FP / FP + TN
-def calc_fpr(np_shape_fp, np_shape_tn , xticks, epochs):
-
-  new_array = []
-
-  for j in range(xticks):
-
-    column_list = []
-
-    for i in range(epochs):
-
-      fp_val_in_epoch_i_at_exp_t_j = np_shape_fp[i][j]
-      tn_val_in_epoch_i_at_exp_t_j = np_shape_tn[i][j]
-
-      column_list.append(fp_val_in_epoch_i_at_exp_t_j / (fp_val_in_epoch_i_at_exp_t_j + tn_val_in_epoch_i_at_exp_t_j))
-
-    new_array.append(column_list)
-
-  fpr = np.array(np.array(new_array).mean(axis=1))
+# FPR = FP / FP + TN
 
 
-  return fpr
+def calc_fpr(np_shape_fp, np_shape_tn, xticks, epochs):
 
+    new_array = []
+
+    for j in range(xticks):
+
+        column_list = []
+
+        for i in range(epochs):
+
+            fp_val_in_epoch_i_at_exp_t_j = np_shape_fp[i][j]
+            tn_val_in_epoch_i_at_exp_t_j = np_shape_tn[i][j]
+
+            column_list.append(fp_val_in_epoch_i_at_exp_t_j /
+                               (fp_val_in_epoch_i_at_exp_t_j + tn_val_in_epoch_i_at_exp_t_j))
+
+        new_array.append(column_list)
+
+    fpr = np.array(np.array(new_array).mean(axis=1))
+
+    return fpr
 
 
 fig = plt.figure(figsize=(20, 13))
 
-#for 2 plots
+# for 2 plots
 widthEach = 60
-xytickFontsize=23
-labelsize=35
-legendsize=40
-pad_inches=0.1
+xytickFontsize = 23
+labelsize = 35
+legendsize = 40
+pad_inches = 0.1
 
 x = compl_range
 y = calc_fnr(np_shape_of_histories_fn, np_shape_of_histories_tp, 22, 100)
@@ -199,14 +193,12 @@ plt.xlabel("Exposure Times in Seconds", fontsize=labelsize)
 # plt.plot(x_axis, ctrl_line, color="black", label="1.0", linestyle='--')
 
 
-
-
-plt.plot(x,y, label="False Negative Rate", color="orange")
+plt.plot(x, y, label="False Negative Rate", color="orange")
 
 plt.legend(loc="upper right", prop={'size': legendsize})
 
 
-#----------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------
 
 
 plt.subplot(1, 3, 2)
@@ -227,18 +219,16 @@ plt.ylabel("False Positive Rate", fontsize=labelsize)
 plt.xlabel("Exposure Times in Seconds", fontsize=labelsize)
 
 
-
-
-plt.plot(x,y, label="False Positive Rate", color="red")
+plt.plot(x, y, label="False Positive Rate", color="red")
 
 plt.legend(loc="upper right", prop={'size': legendsize})
 
 
-#----------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------
 
 
-plt.savefig(str(PATH_TO_HISTORIES) + "exp_time_plotsRATES.png",pad_inches=pad_inches, bbox_inches="tight", dpi=100)
+plt.savefig(str(PATH_TO_HISTORIES) + "exp_time_plotsRATES.png",
+            pad_inches=pad_inches, bbox_inches="tight", dpi=100)
 # plt.savefig(str(OUT_PATH))
 
 plt.show()
-

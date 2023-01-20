@@ -1,4 +1,3 @@
-
 echo READING CONFIG
 #need to be changed detection to system
 #line is given and can be written as needed --------------------------need to be changed!
@@ -18,13 +17,11 @@ IP_DST_VICTIM="9.8.7.6"
 #time between each attack!
 NO_Attack_Timer=30
 
-
-
 #get general info
 capinfos $PCAP_PATH_ORG | grep "First packet time:"
-tshark -r $PCAP_PATH_ORG -T fields -e frame.time_epoch > tmp.csv
+tshark -r $PCAP_PATH_ORG -T fields -e frame.time_epoch >tmp.csv
 echo "Measured Start of PCAP FILE:"
-head -1 tmp.csv 
+head -1 tmp.csv
 rm tmp.csv
 
 echo "---LOG: Start Time used: $ATTACK_START_TIMESTAMP"
@@ -38,59 +35,50 @@ OUT_PATH_MAPs="${FOLDER_PATH}maps/"
 
 #needed to generate folder structure
 if [ ! -d $OUTPUT_FOLDER_PATH ]; then
-echo "CREATING data temp and result folder at $OUTPUT_FOLDER_PATH"
-mkdir -p $OUTPUT_FOLDER_PATH;
-mkdir "$OUTPUT_FOLDER_PATH/tmp";
+    echo "CREATING data temp and result folder at $OUTPUT_FOLDER_PATH"
+    mkdir -p $OUTPUT_FOLDER_PATH
+    mkdir "$OUTPUT_FOLDER_PATH/tmp"
 fi
-
 
 PCAP_PATH=$PCAP_PATH_ORG
 
-
-for ((j=0; j<$AMMOUNT_ATTACKS_PER_IP; j++))
-do 
+for ((j = 0; j < $AMMOUNT_ATTACKS_PER_IP; j++)); do
 
     echo "------------------------------------------------------------------------------INJECTING attack $j ---------------------------------------------------"
 
-CURRENT_PORTs="$START_PORT-$END_PORT"
-
-IP_SRC_ATTACK="${IP_SRC_ATTACK_list[$i]}"
-
-echo "$IDT_LOC -i $PCAP_PATH -a PortscanAttack ip.src=$IP_SRC_ATTACK ip.dst=$IP_DST_VICTIM port.dst="$CURRENT_PORTs" inject.at-timestamp=$ATTACK_START_TIMESTAMP -o $OUTPATH"
-
-$IDT_LOC -i $PCAP_PATH -a PortscanAttack ip.src=$IP_SRC_ATTACK ip.dst=$IP_DST_VICTIM port.dst="$CURRENT_PORTs" inject.at-timestamp=$ATTACK_START_TIMESTAMP -o $OUTPATH
-
-PCAP_PATH=$OUTPATH
-
-
-START_PORT=$(($END_PORT + 1)) 
-END_PORT=$(($END_PORT + PORT_RANGE + 1)) 
-
-
-for ((i=0; i<$AMMOUNT_ATTACKS; i++))
-
-do
-    echo "------------------------------------------------------------------------------INJECTING Attacker $i ---------------------------------------------------"
+    CURRENT_PORTs="$START_PORT-$END_PORT"
 
     IP_SRC_ATTACK="${IP_SRC_ATTACK_list[$i]}"
-    ATTACK_START_TIMESTAMP=$(($ATTACK_START_TIMESTAMP + $NO_Attack_Timer))  
-    echo "---LOG: Injected Attack in $PCAP_PATH from $IP_SRC_ATTACK to $IP_DST_VICTIM with ports $CURRENT_PORTs at timestamp: $ATTACK_START_TIMESTAMP written to: $OUTPATH"
+
+    echo "$IDT_LOC -i $PCAP_PATH -a PortscanAttack ip.src=$IP_SRC_ATTACK ip.dst=$IP_DST_VICTIM port.dst="$CURRENT_PORTs" inject.at-timestamp=$ATTACK_START_TIMESTAMP -o $OUTPATH"
+
+    $IDT_LOC -i $PCAP_PATH -a PortscanAttack ip.src=$IP_SRC_ATTACK ip.dst=$IP_DST_VICTIM port.dst="$CURRENT_PORTs" inject.at-timestamp=$ATTACK_START_TIMESTAMP -o $OUTPATH
+
+    PCAP_PATH=$OUTPATH
+
+    START_PORT=$(($END_PORT + 1))
+    END_PORT=$(($END_PORT + PORT_RANGE + 1))
+
+    for ((i = 0; i < $AMMOUNT_ATTACKS; i++)); do
+        echo "------------------------------------------------------------------------------INJECTING Attacker $i ---------------------------------------------------"
+
+        IP_SRC_ATTACK="${IP_SRC_ATTACK_list[$i]}"
+        ATTACK_START_TIMESTAMP=$(($ATTACK_START_TIMESTAMP + $NO_Attack_Timer))
+        echo "---LOG: Injected Attack in $PCAP_PATH from $IP_SRC_ATTACK to $IP_DST_VICTIM with ports $CURRENT_PORTs at timestamp: $ATTACK_START_TIMESTAMP written to: $OUTPATH"
+
+    done
 
 done
-
-
-done
-
 
 if [ $AMMOUNT_ATTACKS == 0 ]; then
     echo "------------------------------------------------------------------------------Copying Traffic without attacks ---------------------------------------------------"
-    cp $PCAP_PATH_ORG $OUTPATH;
+    cp $PCAP_PATH_ORG $OUTPATH
     IP_SRC_ATTACK=-1
     IP_DST_VICTIM=-1
 fi
 
-echo CONVERTING TO CSV 
-tshark -r $OUTPATH -t ud -T fields -e ip.src -e ip.dst -e tcp.srcport  -e tcp.dstport  -e udp.srcport  -e udp.dstport -e ip.proto -e _ws.col.Time -e frame.time_epoch -e frame.protocols -E separator=, -E quote=d, -E header=y > $OUT_CSV
+echo CONVERTING TO CSV
+tshark -r $OUTPATH -t ud -T fields -e ip.src -e ip.dst -e tcp.srcport -e tcp.dstport -e udp.srcport -e udp.dstport -e ip.proto -e _ws.col.Time -e frame.time_epoch -e frame.protocols -E separator=, -E quote=d, -E header=y >$OUT_CSV
 
 echo "OUT_CSV Name from tshark: $OUT_CSV"
 python3 ../Label_Generator/ONE_TARGET_LABEL.py $IP_DST_VICTIM $OUT_CSV $LABELD_OUT_CSV

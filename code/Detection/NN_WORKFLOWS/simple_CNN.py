@@ -8,9 +8,10 @@ from tensorflow.keras.callbacks import TensorBoard
 
 import tensorflow as tf
 
+
 def getModel(resolution):
 
-    input_shape=(resolution, resolution, 1)
+    input_shape = (resolution, resolution, 1)
     model = keras.Sequential()
     model.add(Conv2D(32, (2, 2), input_shape=input_shape))
     model.add(Activation('relu'))
@@ -32,14 +33,14 @@ def getModel(resolution):
     model.add(Activation('sigmoid'))
 
     model.compile(
-      loss='binary_crossentropy',
-      metrics=['accuracy', 
-      tf.keras.metrics.Precision(name="precision"),
-      tf.keras.metrics.Recall(name="recall"),
-      tf.keras.metrics.FalsePositives(name="FP"),
-      tf.keras.metrics.FalseNegatives(name="FN"),
-      tf.keras.metrics.TruePositives(name="TP"),
-      tf.keras.metrics.TrueNegatives(name="TN"),
-      ]
-  )
+        loss='binary_crossentropy',
+        metrics=['accuracy',
+                 tf.keras.metrics.Precision(name="precision"),
+                 tf.keras.metrics.Recall(name="recall"),
+                 tf.keras.metrics.FalsePositives(name="FP"),
+                 tf.keras.metrics.FalseNegatives(name="FN"),
+                 tf.keras.metrics.TruePositives(name="TP"),
+                 tf.keras.metrics.TrueNegatives(name="TN"),
+                 ]
+    )
     return model
