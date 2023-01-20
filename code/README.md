@@ -25,7 +25,7 @@ This project contains a Detection Approach for Portscans with Machine Learning (
 
 
 
-- 4. run Detection on maps Folder
+-run Detection on maps Folder
 
 ```bash run_detection.sh aggregation_ready_trace.csv```
 
