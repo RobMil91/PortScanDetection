@@ -23,7 +23,7 @@ This project contains a Detection Approach for Portscans with Machine Learning (
 
 -  Label the PCAP File and Format Columns to create 
 
- - csv from PCAP 
+ - Convert PCAP to csv 
    ``` tshark -r injected_attack.pcap -t ud -T fields -e ip.src -e ip.dst -e tcp.srcport  -e tcp.dstport  -e udp.srcport  -e udp.dstport -e ip.proto -e    frame.time -e _ws.col.Time -e frame.time_epoch -e frame.protocols -E separator=, -E quote=d, -E header=y > unlabeled_trace.csv```
    
  - label the csv 
