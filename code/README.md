@@ -31,10 +31,7 @@ This project contains a Detection Approach for Portscans with Machine Learning (
  - label the csv 
     ```python3 Data/Label_Generator/ONE_TARGET_LABEL.py 192.168.0.5 unlabeled_trace.csv aggregation_ready_trace.csv```
 
-
-
 - run Detection (includes Map creation, splitting in Training/Validation) creates a Folder Structure with Log Files
-
     ```bash run_detection.sh aggregation_ready_trace.csv```
 
 
