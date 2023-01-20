@@ -56,9 +56,9 @@ This project contains a Detection Approach for Portscans with Machine Learning (
 - figure out time of PCAP file
 ```./get_start_and_end.sh ~/data/background_traffic_14-14-30.pcap```
 
-- train model on aggregation map folder, parameters are : <folder location> <dimensions of maps> <epochs> <batchsize> <validation split> <outputPath> <name>
+- train & validate model on aggregation map folder, parameters are : <folder location> <dimensions of maps> <epochs> <batchsize> <validation split> <outputPath> <name>
     
-- if validation split > 0.0 --> the result folder will contain the model plus the histories created by the model testing phase
+    - if validation split > 0.0 --> the result folder will contain the model plus the histories created by the model testing phase \
 ```python3 train_model.py ~/pip_workflow/9_diff_ip_attacks/maps/ 32 100 128 0.0 ~/pip_workflow/9_diff_ip_attacks/results/ round2```
 
 - time measure experiment, (how long the classification of an aggregation map takes)
