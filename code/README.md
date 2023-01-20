@@ -45,22 +45,22 @@ This project contains a Detection Approach for Portscans with Machine Learning (
 ```python3 plot_from_histories.py ~/pip_workflow/experiment1/result_histories/ 100 ~/pip_workflow/experiment1/result_histories/metrics/ 'accuracy'```
 
 #display one history
-python3 plot_1_history.py ~/pip_workflow/experiment1/results/round1.pkl ~/pip_workflow/experiment1/results/metrics/
+```python3 plot_1_history.py ~/pip_workflow/experiment1/results/round1.pkl ~/pip_workflow/experiment1/results/metrics/```
 
-python3 check_history_columns.py ~/pip_workflow/experiment1/result_histories/ROUND_10.pkl 
+```python3 check_history_columns.py ~/pip_workflow/experiment1/result_histories/ROUND_10.pkl ```
 
 #scan csv file for an attack
-python3 FIND_ATTACK.py  "110.110.110.110" "12.12.12.12" 1 1 "~/pip_workflow/experiment8/tmp/injected_attack.csv" 
+```python3 FIND_ATTACK.py  "110.110.110.110" "12.12.12.12" 1 1 "~/pip_workflow/experiment8/tmp/injected_attack.csv" ```
 
 #figure out time of pcap file
-./get_start_and_end.sh ~/data/background_traffic_14-14-30.pcap
+```./get_start_and_end.sh ~/data/background_traffic_14-14-30.pcap```
 
 #train model on aggregation map folder, parameters are : <folder location> <dimensions of maps> <epochs> <batchsize> <validation split> <outputPath> <name>
     
 #if validation split > 0.0 --> the result folder will contain the model plus the histories created by the model testing phase
-python3 train_model.py ~/pip_workflow/9_diff_ip_attacks/maps/ 32 100 128 0.0 ~/pip_workflow/9_diff_ip_attacks/results/ round2
+```python3 train_model.py ~/pip_workflow/9_diff_ip_attacks/maps/ 32 100 128 0.0 ~/pip_workflow/9_diff_ip_attacks/results/ round2```
 
 #time measure experiment, (how long the classification of an aggregation map takes)
-python3 test_model_prediction_time.py ~/experiment_data/time_pred_experiment/loadable_model/ROUND_1_model/ ~/experiment_data/time_pred_experiment/one_aggr_map/ 32 100 128 0.1 ~/experiment_data/time_pred_experiment/loadable_model time_test
+```python3 test_model_prediction_time.py ~/experiment_data/time_pred_experiment/loadable_model/ROUND_1_model/ ~/experiment_data/time_pred_experiment/one_aggr_map/ 32 100 128 0.1 ~/experiment_data/time_pred_experiment/loadable_model time_test```
 
 
