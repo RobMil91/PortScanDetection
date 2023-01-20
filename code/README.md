@@ -18,8 +18,12 @@ This project contains a Detection Approach for Portscans with Machine Learning (
 - Generate  PCAP file
 (can be written with wireshark/tshark or downloaded from benchmark sources -> should include port scan behavior with known attacker!)
 
-- OPTIONAL: use IDT2 to inject attack packets (necessary if no attacker is within the pcap)
+
+
+- OPTIONAL: use ID2T to inject attack packets (necessary if no attacker is within the pcap)
 ```./id2t -i ~/workspace/MA_Thesis/datasets/pcap_lab/clean/test_pcap_14cet_cic.pcap -a PortscanAttack ip.src=192.168.111.111 inject.at-timestamp=1499428783 port.dst="1-65535" ip.dst=192.168.111.112 -o ~/workspace/MA_Thesis/datasets/pcap_lab/clean```
+
+- ID2T is a great Attack Injection Tool that can be found at: https://github.com/tklab-tud/ID2T
 
 -  Label the PCAP File and Format Columns to create 
 
