@@ -8,7 +8,7 @@ This project contains a Detection Approach for Portscans with Machine Learning (
     - The Maps use axis Source IP Address and Destination Port to display the Network Traffic
 - Label Maps (Timeframe e. g. 1 second is labeled as containing Port Scan or Benign Traffic)
 - Keras ML CNN trains supervised and predicts based on the trained Model
-- The created Histories from the Testing/Training Phase from the ML Model can be plotted (metrics like accuracy, precision, recall are used)
+- The created Histories from the Training/ Validation Phase from the ML Model can be plotted (metrics like accuracy, precision, recall are used)
 
 # In depth discussed in Thesis:
 - https://github.com/RobMil91/PortScanDetection/blob/main/thesis/Aggregated_Traffic_ML_Detection.pdf
