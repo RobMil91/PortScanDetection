@@ -4,21 +4,21 @@ This project contains a Detection Approach for Portscans with Machine Learning (
 - Network Traffic (PCAP File)
 - format to csv ( & adjust Packet attributes)
 - build Maps ( 2-Dimensional Representation of a defined Time Window of Network Traffic)
-    - The Maps use axis like Source IP Adress and Destination Port to display the Network Traffic
+    - The Maps use axis like Source IP Address and Destination Port to display the Network Traffic
 - Maps are labeled
 - Keras ML CNN trains supervised and predicts based on the trained Model
 - The created Histories from the Testing/Training Phase from the ML Model can be plotted (metrics like accuracy, precision, recall are used)
 
 # Workflow
 
-- genereate  pcap file
-(can be written with wireshark/tshark or downloaded from benchmark sources -> should include port scan behaviour with known attacker!)
+- generate  PCAP file
+(can be written with wireshark/tshark or downloaded from benchmark sources -> should include port scan behavior with known attacker!)
 
 - OPTIONAL: use IDT2 to inject attack packets (necessary if no attacker is within the pcap)
 ```./id2t -i ~/workspace/MA_Thesis/datasets/pcap_lab/clean/test_pcap_14cet_cic.pcap -a PortscanAttack ip.src=192.168.111.111 inject.at-timestamp=1499428783 port.dst="1-65535" ip.dst=192.168.111.112 -o ~/workspace/MA_Thesis/datasets/pcap_lab/clean```
 
 -  Label the PCAP File and Format Columns -> csv File
--- csv from pcap 
+-- csv from PCAP 
    ``` tshark -r injected_attack.pcap -t ud -T fields -e ip.src -e ip.dst -e tcp.srcport  -e tcp.dstport  -e udp.srcport  -e udp.dstport -e ip.proto -e    frame.time -e _ws.col.Time -e frame.time_epoch -e frame.protocols -E separator=, -E quote=d, -E header=y > unlabeled_trace.csv```
 -- label the csv 
     ```python3 Data/Label_Generator/ONE_TARGET_LABEL.py 192.168.0.5 unlabeled_trace.csv aggregation_ready_trace.csv```
@@ -36,7 +36,7 @@ This project contains a Detection Approach for Portscans with Machine Learning (
 ## Tool kit example commands:
 
 - shows the amount of labeled maps
-```pyhon3 analyzse_aggr_maps_folder.py ~/pip_workflow/experiment2/results/```
+```python3 analyzse_aggr_maps_folder.py ~/pip_workflow/experiment2/results/```
 
 - balances the aggregation maps
 ```python3 reduce_benign_maps.py ~/pip_workflow/experiment5/maps/expeX/```
@@ -52,7 +52,7 @@ This project contains a Detection Approach for Portscans with Machine Learning (
 - scan csv file for an attack
 ```python3 FIND_ATTACK.py  "110.110.110.110" "12.12.12.12" 1 1 "~/pip_workflow/experiment8/tmp/injected_attack.csv" ```
 
-- figure out time of pcap file
+- figure out time of PCAP file
 ```./get_start_and_end.sh ~/data/background_traffic_14-14-30.pcap```
 
 - train model on aggregation map folder, parameters are : <folder location> <dimensions of maps> <epochs> <batchsize> <validation split> <outputPath> <name>
@@ -62,5 +62,6 @@ This project contains a Detection Approach for Portscans with Machine Learning (
 
 - time measure experiment, (how long the classification of an aggregation map takes)
 ```python3 test_model_prediction_time.py ~/experiment_data/time_pred_experiment/loadable_model/ROUND_1_model/ ~/experiment_data/time_pred_experiment/one_aggr_map/ 32 100 128 0.1 ~/experiment_data/time_pred_experiment/loadable_model time_test```
+
 
 
