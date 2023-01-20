@@ -15,7 +15,7 @@ This project contains a Detection Approach for Portscans with Machine Learning (
 
 # Example Workflow:
 
-- generate  PCAP file
+- Generate  PCAP file
 (can be written with wireshark/tshark or downloaded from benchmark sources -> should include port scan behavior with known attacker!)
 
 - OPTIONAL: use IDT2 to inject attack packets (necessary if no attacker is within the pcap)
