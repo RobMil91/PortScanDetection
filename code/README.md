@@ -36,13 +36,13 @@ This project contains a Detection Approach for Portscans with Machine Learning (
 ## Tool kit example commands:
 
 - shows the amount of labeled maps
-pyhon3 analyzse_aggr_maps_folder.py ~/pip_workflow/experiment2/results/
+```pyhon3 analyzse_aggr_maps_folder.py ~/pip_workflow/experiment2/results/```
 
 #balances the aggregation maps
-python3 reduce_benign_maps.py ~/pip_workflow/experiment5/maps/expeX/
+```python3 reduce_benign_maps.py ~/pip_workflow/experiment5/maps/expeX/```
 
 #plots from multiple histories to show differences in metric over different maps attributes
-python3 plot_from_histories.py ~/pip_workflow/experiment1/result_histories/ 100 ~/pip_workflow/experiment1/result_histories/metrics/ 'accuracy'
+```python3 plot_from_histories.py ~/pip_workflow/experiment1/result_histories/ 100 ~/pip_workflow/experiment1/result_histories/metrics/ 'accuracy'```
 
 #display one history
 python3 plot_1_history.py ~/pip_workflow/experiment1/results/round1.pkl ~/pip_workflow/experiment1/results/metrics/
@@ -56,7 +56,8 @@ python3 FIND_ATTACK.py  "110.110.110.110" "12.12.12.12" 1 1 "~/pip_workflow/expe
 ./get_start_and_end.sh ~/data/background_traffic_14-14-30.pcap
 
 #train model on aggregation map folder, parameters are : <folder location> <dimensions of maps> <epochs> <batchsize> <validation split> <outputPath> <name>
-# if validation split > 0.0 --> the result folder will contain the model plus the histories created by the model testing phase
+    
+#if validation split > 0.0 --> the result folder will contain the model plus the histories created by the model testing phase
 python3 train_model.py ~/pip_workflow/9_diff_ip_attacks/maps/ 32 100 128 0.0 ~/pip_workflow/9_diff_ip_attacks/results/ round2
 
 #time measure experiment, (how long the classification of an aggregation map takes)
