@@ -17,15 +17,17 @@ This project contains a Detection Approach for Portscans with Machine Learning (
 - OPTIONAL: use IDT2 to inject attack packets (necessary if no attacker is within the pcap)
 ```./id2t -i ~/workspace/MA_Thesis/datasets/pcap_lab/clean/test_pcap_14cet_cic.pcap -a PortscanAttack ip.src=192.168.111.111 inject.at-timestamp=1499428783 port.dst="1-65535" ip.dst=192.168.111.112 -o ~/workspace/MA_Thesis/datasets/pcap_lab/clean```
 
--  Label the PCAP File and Format Columns -> csv File
+-  Label the PCAP File and Format Columns to create 
+
 -- csv from PCAP 
    ``` tshark -r injected_attack.pcap -t ud -T fields -e ip.src -e ip.dst -e tcp.srcport  -e tcp.dstport  -e udp.srcport  -e udp.dstport -e ip.proto -e    frame.time -e _ws.col.Time -e frame.time_epoch -e frame.protocols -E separator=, -E quote=d, -E header=y > unlabeled_trace.csv```
+   
 -- label the csv 
     ```python3 Data/Label_Generator/ONE_TARGET_LABEL.py 192.168.0.5 unlabeled_trace.csv aggregation_ready_trace.csv```
 
 
 
-- run Detection on maps Folder
+- run Detection (includes Map creation, splitting in Training/Validation) creates a Folder Structure with Log Files
 
     ```bash run_detection.sh aggregation_ready_trace.csv```
 
