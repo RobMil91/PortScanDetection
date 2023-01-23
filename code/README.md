@@ -12,7 +12,8 @@ This project contains a Detection Approach for Portscans with Machine Learning (
 ![image](https://user-images.githubusercontent.com/26775744/213976833-abddf8a0-2fca-4d0e-a6c3-cb3425a301de.png)
 
 Map Greyscale Visualization Input for CNN:
-![image](https://user-images.githubusercontent.com/26775744/213976869-5722db34-e371-443d-8d52-b170d45704c4.png)
+![image](https://user-images.githubusercontent.com/26775744/213977103-3a49879b-2e51-40eb-9e0f-4d783bf9eb6a.png)
+
 
 
 
